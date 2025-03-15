@@ -1,0 +1,391 @@
+@import '../../../styles.scss';
+
+.entire-screen {
+  display: flex;
+  justify-content: center;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-bg-color); /* Tan background */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 50px; 
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: left; /* Center align items */
+  width: 100%;
+  padding: 15px; /* Add some padding around the container */
+}
+
+.logo-login {
+  width: 100px;
+  margin-left: 13px;
+  margin-bottom: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+mat-card {
+  max-width: 500px;
+  width: 100%; /* Make sure card takes full width within the max limit */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Card shadow for depth */
+  border-radius: 20px; /* Rounded corners for the card */
+  background-color: var(--bg-color);
+  z-index: 20;
+}
+
+mat-card-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  font-size: 2.2em;
+  color: var(--standard-text-color);
+  padding-top: 30px;
+  padding-bottom: 25px;
+  padding-left: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+mat-form-field {
+  width: 100%;
+  min-width: 300px;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+
+// Overriding Material Design Input Field CSS
+  // Background Color of Input Box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled){
+    background-color: var(--inputbox-bg-color) !important;
+  }
+    
+  // Label Text Color when you haven't correctly filled in the input
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label {
+    color: #d01e0a !important;
+  }
+    
+  // Underline Color when you are filling in the input but it doesn't satisfy the reqs yet
+  ::ng-deep .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: #d01e0a !important;
+  }
+    
+  // Underline Color when you are filling in the input and it satisfies the requirements
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: var(--accent-color) !important;
+  }
+    
+  // Blinking Line Color that appears when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    caret-color: var(--standard-text-color) !important;
+  }
+    
+  // Label Text Color when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+    color: var(--standard-text-color) !important;
+  }
+    
+  // Login button text color when it is active (clickable)
+  ::ng-deep .mat-mdc-button:not(:disabled) {
+    color: white !important;
+  }
+  
+  // Default Input Placeholder Text Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: var(--standard-light-text-color) !important;
+  }
+  
+  // Default Input Border Bottom Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color: var(--standard-light-text-color) !important;
+  }
+
+  // Default Input Text Color 
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--standard-text-color) !important;
+  }
+  
+  // Default Eye Icon Color
+  ::ng-deep .mat-mdc-icon-button {
+    color: var(--standard-light-text-color) !important;
+  }
+
+  ::ng-deep .mdc-text-field--outlined {
+	.mat-mdc-form-field-flex {
+	  /* Customizing the border color of the leading, notch, and trailing parts */
+	  .mdc-notched-outline__leading {
+      border-color: var(--standard-lightish-text-color) !important;
+      // border-width: 2px !important;
+	  }
+  
+	  .mdc-notched-outline__notch {
+      border-color: var(--standard-lightish-text-color) !important;
+      // border-width: 2px !important;
+      border-left: 0 !important;
+	  }
+  
+	  .mdc-notched-outline__trailing {
+      border-color: var(--standard-lightish-text-color) !important;
+      // border-width: 2px !important;
+	  }
+	}
+	
+   :focus-within .mdc-notched-outline,
+	  :focus-within .mdc-notched-outline__leading,
+	  :focus-within .mdc-notched-outline__notch,
+	  :focus-within .mdc-notched-outline__trailing {
+		  border-color: var(--accent-color) !important;
+	  }
+  }
+
+
+.eye-button {
+  margin-right: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: center; /* Center the button */
+}
+
+.login-button {
+  background-color: var(--accent-color);
+  color: white; /* White text color */
+  font-size: 1.3em;
+  border: none; /* Remove default border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  width: 100%;
+  height: 55px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+  transition: all 0.2s ease-in-out; // Add transition effect
+
+  &:hover {
+    background-color: #257528;
+  }
+}
+
+.yellow-design {
+  position: absolute;
+  top: 0; /* Position at the top */
+  left: -30px; /* Align to the left */
+  height: 100vh; /* Maintain aspect ratio */
+  z-index: 1; /* Position behind other elements if needed */
+  transition: all 0.3s ease-in-out;
+}
+
+.red-design {
+  position: absolute;
+  bottom: 0; /* Position at the bottom */
+  right: -30px; /* Align to the right */
+  height: 100vh; /* Maintain aspect ratio */
+  z-index: 1; /* Position behind other elements if needed */
+  transition: all 0.3s ease-in-out;
+}
+
+form {
+  padding-bottom: 10px;
+}
+
+.signup-text {
+  margin-top: 2px;
+  font-size: 1.05em;
+  color: var(--standard-text-color);
+}
+
+.error-msg {
+  font-size: 1em;
+}
+
+
+// Phone screens
+@media screen and (max-width: 620px) {
+  .container {
+    padding: 0 50px; 
+  }
+
+  .logo-login {
+    width: 90px; /* Adjust logo size as needed */
+    margin-top: 5px;
+  }
+  
+  .login-container {
+    padding: 10px; 
+  }
+
+  mat-card-content {
+    transition: all 0.3s ease-in-out;
+  }
+
+  mat-card-title {
+    font-size: 1.8em;
+    padding-top: 20px;
+    padding-bottom: 25px;
+  }
+
+  mat-form-field {
+    margin-top: 0px;
+    margin-bottom: 7px;
+  }
+
+  .login-button {
+    margin-top: 10px;
+  }
+
+  .signup-text {
+    font-size: 1em;
+  }
+
+  form {
+    padding-bottom: 5px;
+  }
+
+  .error-msg {
+    margin-top: -5px;
+    font-size: .95em;
+  }
+}
+
+// Make background designs look good on smaller screens
+@media screen and (max-width: 1250px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -100px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -100px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -200px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -200px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -270px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -270px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -300px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -300px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -340px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -340px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -300px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -300px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -340px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -340px; /* Align to the right */
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -360px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -360px; /* Align to the right */
+  }
+}
+
+
+// iPads
+@media screen and (min-height: 800px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -450px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -450px; /* Align to the right */
+  }
+}
+
+@media screen and (min-height: 1024px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -450px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -450px; /* Align to the right */
+  }
+}
+
+@media screen and (min-height: 1200px) {
+  .yellow-design {
+    top: 0; /* Position at the top */
+    left: -540px; /* Align to the left */
+  }
+  
+  .red-design {
+    bottom: 0; /* Position at the bottom */
+    right: -540px; /* Align to the right */
+  }
+}

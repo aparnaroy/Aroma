@@ -1,0 +1,239 @@
+<mat-card class="recipe-card" [ngClass]="{ 'edit-mode': editMode }" *ngIf="recipe">
+    <mat-card-header>
+        <div class="header-grid">
+            <div class="header-image" (click)="editMode && fileInput.click()">
+                <div *ngIf="recipe.image; else noImage" class="image-container">
+                    <img mat-card-image [src]="recipe.image" alt="{{ recipe.name }}">
+                    <div *ngIf="editMode" class="image-overlay">
+                        <span>Click to change image</span>
+                    </div>
+                </div>
+                <ng-template #noImage>
+                    <div class="image-not-found" (click)="editMode" [class.edit-mode]="editMode">
+                        {{ editMode ? 'Click To Add Image' : 'Image not found' }}
+                    </div>
+                </ng-template>
+                <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+            </div>
+            <div class="header-content">
+                <div class="button-container">
+                    <button mat-icon-button (click)="toggleInfo()" class="info-button" *ngIf="!editMode"
+                        (mouseenter)="showInfo = true" (mouseleave)="showInfo = false">
+                        <mat-icon>info</mat-icon>
+                    </button>
+
+                    <button mat-button class="cookmode-button" (click)="cookMode()" *ngIf="!editMode"
+                        [ngClass]="{ 'cook-mode': isCookMode }">
+                        Cook Mode: {{ isCookMode ? 'ON' : 'OFF' }}
+                    </button>
+
+                    <div *ngIf="showInfo" class="info-box">
+                        <p>Turn Cook Mode ON to make your screen stay on while you cook!</p>
+                    </div>
+                </div>
+
+                <h1 class="recipe-name">{{ recipe.name }}</h1>
+                <mat-form-field *ngIf="editMode" appearance="outline">
+                    <mat-label>Recipe Name</mat-label>
+                    <input matInput [(ngModel)]="recipe.name" placeholder="Ex: Chili Garlic Noodles">
+                </mat-form-field>
+                <mat-card-subtitle class="source" *ngIf="!editMode && recipe.source">
+                    <div class="source-container">
+                        <span>{{ recipe.source }}</span>
+                        <button mat-icon-button (click)="copyToClipboard(recipe.source)" class="copy-button"
+                            *ngIf="!editMode">
+                            <mat-icon>content_copy</mat-icon>
+                        </button>
+                        <div id="copy-message" class="copy-message hidden">Copied to clipboard!</div>
+                    </div>
+                </mat-card-subtitle>
+                <mat-form-field class="source-field" *ngIf="editMode" appearance="outline">
+                    <mat-label>Source</mat-label>
+                    <input matInput [(ngModel)]="recipe.source" placeholder="Ex: www.recipes.com">
+                </mat-form-field>
+                <div class="tags">
+                    <div *ngIf="!editMode">
+                        <div class="tag-list">
+                            <span *ngFor="let tag of tags(); let i = index" class="tag">
+                                {{ tag }}<span *ngIf="i < tags().length - 1"> </span>
+                            </span>
+                        </div>
+                    </div>
+                    <form *ngIf="editMode">
+                        <mat-form-field class="editable-tag-list" appearance="outline">
+                            <mat-label>Tags</mat-label>
+                            <mat-chip-grid #chipGrid aria-label="Tag selection">
+                                @for (tag of tags(); track $index) {
+                                <mat-chip-row (removed)="remove(tag)">
+                                    {{ tag }}
+                                    <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip-row>
+                                }
+                            </mat-chip-grid>
+                            <input name="currentTag" placeholder="New Tag..." #tagInput [(ngModel)]="currentTag"
+                                [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)" />
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                @for (tag of filteredTags(); track tag) {
+                                <mat-option [value]="tag">{{tag}}</mat-option>
+                                }
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </div>
+                <app-rating *ngIf="!editMode && recipe.rating" [rating]="recipe.rating"></app-rating>
+                <span class="rating-label" *ngIf="editMode">Rating:</span>
+                <app-rating class="rating-edit" *ngIf="editMode" [rating]="recipe.rating" [editable]="true"
+                    (ratingChange)="recipe.rating = $event"></app-rating>
+                <p class="description" *ngIf="!editMode && recipe.description">{{ recipe.description }}</p>
+                <mat-form-field *ngIf="editMode" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput [(ngModel)]="recipe.description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="sections-container">
+            <!-- Ingredients Section -->
+            <div class="ingredients-section" [class.not-edit-mode]="!editMode">
+                <h3>Ingredients</h3>
+                <div class="scaler-section" *ngIf="!editMode && recipe.ingredients && recipe.ingredients.length">
+                    <button class="scaler-button" (click)="scaleIngredients(0.5)" [class.selected]="selectedMultiplier === 0.5">0.5x</button>
+                    <button class="scaler-button" (click)="scaleIngredients(1)" [class.selected]="selectedMultiplier === 1">1x</button>
+                    <button class="scaler-button" (click)="scaleIngredients(2)" [class.selected]="selectedMultiplier === 2">2x</button>
+                  
+                    <!-- Custom Button Section -->
+                    <div class="scaler-button custom-button" [class.selected]="selectedMultiplier === 'custom'">
+                      <span *ngIf="!showCustomInput" (click)="toggleCustomInput()">{{ customButtonText }}</span>
+                      <input
+                        *ngIf="showCustomInput"
+                        type="number"
+                        [(ngModel)]="scalerMultiplier"
+                        (blur)="applyCustomMultiplier()"
+                        (keydown.enter)="applyCustomMultiplier()"
+                        (click)="$event.stopPropagation()"
+                      />
+                    </div>
+                </div>
+                  
+                  
+                               
+                                    
+                <div class="ingredients-list">
+                    <ul *ngIf="recipe.ingredients && recipe.ingredients.length; else noIngredients">
+                        <li *ngFor="let ingredient of recipe.ingredients; let i = index" class="ingredient-item"
+                            [class.edit-mode]="editMode" [class.cook-mode]="isCookMode">
+                            <span *ngIf="!editMode && !isCookMode">
+                                <label class="ingredient-text">
+                                    <span
+                                        *ngIf="ingredient.quantity > 0 && !isNaN(ingredient.quantity); else noConvert">
+                                        {{ convertToFraction(ingredient.quantity) }}{{ ingredient.unitOfMeasure ? ' ' :
+                                        ' of ' }}
+                                    </span>
+                                    <ng-template #noConvert>
+                                        <span *ngIf="ingredient.quantity > 0">{{ ingredient.quantity }}</span>
+                                    </ng-template>
+                                    <span>{{ ingredient.unitOfMeasure }} </span>
+                                    <span *ngIf="ingredient.name">{{ toTitleCase(ingredient.name) }}</span>
+                                </label>
+                            </span>
+                            <span *ngIf="!editMode && isCookMode">
+                                <input type="checkbox" id="ingredient-{{i}}" />
+                                <label [for]="'ingredient-' + i" class="ingredient-text">
+                                    <span
+                                        *ngIf="ingredient.quantity > 0 && !isNaN(ingredient.quantity); else noConvert">
+                                        {{ convertToFraction(ingredient.quantity) }}{{ ingredient.unitOfMeasure ? ' ' :
+                                        ' of ' }}
+                                    </span>
+                                    <ng-template #noConvert>
+                                        <span *ngIf="ingredient.quantity > 0">{{ ingredient.quantity }}</span>
+                                    </ng-template>
+                                    <span>{{ ingredient.unitOfMeasure }} </span>
+                                    <span *ngIf="ingredient.name">{{ toTitleCase(ingredient.name) }}</span>
+                                </label>
+                            </span>
+                            <div *ngIf="editMode" class="ingredient-form">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Quantity</mat-label>
+                                    <input matInput [(ngModel)]="ingredient.quantity">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Unit of Measure</mat-label>
+                                    <input matInput [(ngModel)]="ingredient.unitOfMeasure">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput [(ngModel)]="ingredient.name">
+                                </mat-form-field>
+                                <button class="delete-ingredient" mat-icon-button color="warn"
+                                    (click)="removeIngredient(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ng-template #noIngredients>
+                    <p>No ingredients added yet.</p>
+                </ng-template>
+                <button *ngIf="editMode" mat-raised-button color="primary" (click)="addIngredient()">Add
+                    Ingredient</button>
+            </div>
+
+            <!-- Directions Section -->
+            <div class="directions-section" [class.not-edit-mode]="!editMode">
+                <h3>Directions</h3>
+                <div *ngIf="recipe.instructions && recipe.instructions.length; else noDirections">
+                    <ol *ngIf="!editMode">
+                        <li *ngFor="let instruction of recipe.instructions; let i = index; trackBy: trackByFn"
+                            class="direction">
+                            <span class="number">{{ i + 1 }}.</span>
+                            <span class="instruction-text">{{ instruction }}</span>
+                        </li>
+                    </ol>
+                    <div *ngIf="editMode">
+                        <div *ngFor="let instruction of recipe.instructions; let i = index; trackBy: trackByFn"
+                            class="instruction-form">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Step {{ i + 1 }}</mat-label>
+                                <textarea matInput [(ngModel)]="recipe.instructions[i]"></textarea>
+                            </mat-form-field>
+                            <button mat-icon-button color="warn" (click)="removeInstruction(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noDirections>
+                    <p>No directions added yet.</p>
+                </ng-template>
+                <button *ngIf="editMode" mat-raised-button color="primary" (click)="addInstruction()">Add
+                    Direction</button>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <h3>Comments</h3>
+        <div class="comments-section">
+            <p *ngIf="!editMode">{{recipe.comments}}</p>
+            <mat-form-field *ngIf="editMode" appearance="outline">
+                <mat-label>Comments</mat-label>
+                <textarea matInput [(ngModel)]="recipe.comments"></textarea>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button mat-button (click)="editMode ? cancelEdit() : editRecipe()">
+            {{ editMode ? 'Cancel' : 'Edit' }}
+        </button>
+        &nbsp;
+        <button mat-button (click)="editMode ? saveChanges() : confirmDelete()">
+            {{ editMode ? 'Save' : 'Delete' }}
+        </button>
+    </mat-card-actions>
+</mat-card>

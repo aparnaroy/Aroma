@@ -1,0 +1,419 @@
+@import '../../../styles.scss';
+
+$breakpoint: 900px; // Variable for adjustable breakpoint
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  margin-top: 110px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start; // Align items to the top
+  flex-wrap: nowrap; // Do not wrap on larger screens
+}
+
+mat-card {
+  width: 100%;
+  box-shadow: none;
+  border-radius: 20px; 
+  margin: 30px; // Add margin for spacing between columns
+  background: var(--card-bg-color);
+}
+
+.title, .sub-title {
+  font-family: "Lato", sans-serif;
+  line-height: 1.2;
+  color: var(--standard-text-color);
+}
+
+.title {
+  align-self: left;
+  font-weight: 600;
+  font-size: 2.4em;
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  font-weight: 550;
+  font-size: 2em;
+}
+
+.profile {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.update {
+  margin-top: 20px;
+  margin-left: 45px;
+  margin-bottom: 5px;
+}
+
+.sub-sub-title {
+  font-size: 1.6em;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  font-weight: 450;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+form mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.password-requirements {
+  margin-top: -25px;
+  margin-bottom: 20px;
+
+  p {
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 0.78em;
+    margin-bottom: -15px;
+
+    mat-icon {
+      margin-right: 5px;
+      scale: .63;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &.met {
+      color: var(--accent-color);
+
+      mat-icon {
+        color: var(--accent-color);
+      }
+    }
+
+    &.not-met {
+      color: #d01e0a;
+
+      mat-icon {
+        color: #d01e0a;
+      }
+    }
+
+    &.default {
+      color: var (--standard-light-text-color); // Gray color before touched
+
+      mat-icon {
+        color: var (--standard-light-text-color);
+      }
+    }
+  }
+}
+
+// Overriding Material Design Input Field CSS
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled){
+  background-color: var(--inputbox-bg-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label {
+  color: #d01e0a !important;
+}
+
+::ng-deep .mdc-text-field--filled.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: #d01e0a !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: var(--secondary-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  caret-color: var(--standard-text-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+  color: var(--standard-text-color) !important;
+}
+
+::ng-deep .mat-mdc-button:not(:disabled) {
+  color: white !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--standard-light-text-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: var(--standard-light-text-color) !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: var(--standard-text-color) !important;
+}
+
+::ng-deep .mat-mdc-icon-button {
+  color: var(--standard-light-text-color) !important;
+}
+
+.eye-button {
+  margin-right: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.update-button, .change-password-button {
+  background-color: var(--secondary-color);
+  color: white; 
+  font-size: 1.3em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer; 
+  width: 100%;
+  height: 55px;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  transition: background-color 0.3s;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--primary-color);
+  }
+}
+
+.update-button {
+  margin-top: -5px;
+}
+
+.error-msg {
+  font-size: 1em;
+  margin-top: 30px;
+}
+
+.error-message {
+  color: #d01e0a;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.form-separator {
+  height: 5px; /* Adjust the height as needed */
+}
+
+
+
+.account-info-card {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+
+  .profile-container {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    gap: 25px;
+
+    .profile-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.3em;
+      font-weight: bold;
+    }
+
+    .user-details {
+      .user-email {
+        font-size: 23px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .member-info {
+        font-size: 15px;
+        color: gray;
+      }
+    }
+  }
+}
+
+mat-divider {
+  margin: 30px 30px;
+  background-color: var(--standard-lightish-text-color);
+  width: calc(100% - 60px);
+}
+
+::ng-deep .mat-divider {
+  border-top-color: var(--standard-lightish-text-color) !important;
+  border-top-width: 1px !important;
+}
+
+
+
+@media screen and (max-width: $breakpoint) {
+  .settings-container {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  mat-divider {
+    margin: 30px 0px;
+    width: 100%;
+  }
+
+  .form-container {
+    flex-direction: column; // Stack columns
+    // align-items: center; // Center items
+    width: 100%; // Ensure the container takes the full width
+  }
+
+  mat-card {
+    max-width: 100%; // Reduce width to fit smaller screens
+    margin: 10px 0; // Adjust margin for stacked layout
+  }
+
+  .update-button, .change-password-button {
+    width: 100%; // Adjust button width for smaller screens
+    height: 47px;
+    font-size: 1.12em; // Slightly smaller text size
+  }
+  .update-button {
+    margin-top: 0;
+  }
+  .change-password-button {
+    margin-top: 10px;
+  }
+
+  .update {
+    margin-left: 15px;
+    margin-bottom: 20px;
+  }
+
+  .profile {
+    margin-bottom: 15px;
+  }
+
+  .profile-container {
+    margin-bottom: 0;
+  }
+}
+
+
+@media screen and (max-width: 520px) {
+  .settings-container {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    margin-left: 0;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .sub-title {
+    font-size: 1.8em;
+    margin: 0;
+    margin-bottom: 0px;
+  }
+
+  .profile {
+    margin: 0;
+    margin-bottom: 0px;
+  }
+
+  .update {
+    margin-top: 10px !important;
+    margin-bottom: 15px;
+  }
+
+  .profile-container {
+    margin-left: 0 !important;
+    display: flex;
+    flex-direction: column; /* Stack the profile circle and text vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center-align text */
+    margin-top: 15px; /* Add some spacing above */
+  }
+
+  .profile-circle {
+    width: 30vw !important;
+    height: 30vw !important;
+    border-radius: 50%; /* Make it a perfect circle */
+    background-color: var(--circle-bg-color, #007BFF); /* Default background color */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5em !important; /* Adjust font size for the initial */
+    margin-top: -5px;
+    margin-bottom: 0; /* Space between circle and text */
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column; /* Stack email and member info */
+    align-items: center; /* Center align within the container */
+  }
+
+  .user-email {
+    font-size: 1.25em !important;
+    font-weight: bold;
+    margin-bottom: 10px !important; /* Space between email and member info */
+  }
+
+  .member-info {
+    font-size: 0.9em;
+    color: var(--text-muted-color, gray); /* Muted color for additional info */
+  }
+
+  .form-container {
+    flex-direction: column;
+    align-items: center; /* Center-align forms */
+  }
+  
+  .sub-sub-title {
+    margin-left: 0;
+  }
+
+  mat-card-title {
+    margin-left: 0;
+    font-size: 1.5em; /* Smaller title size */
+    margin-bottom: 15px;
+    text-align: center; /* Center-align card titles */
+  }
+
+  .update-button, .change-password-button {
+    width: 100%; /* Buttons take full width */
+    height: 45px; /* Reduce height for smaller screens */
+  }
+
+  .update-button {
+    margin-bottom: 15px;
+  }
+}

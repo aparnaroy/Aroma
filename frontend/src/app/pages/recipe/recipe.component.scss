@@ -1,0 +1,894 @@
+@import '../../../styles.scss';
+
+.recipe-card {
+  width: 100%;
+  padding: 20px 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1 !important;
+  line-height: 1.6;
+}
+
+::ng-deep .mat-mdc-card {
+  background-color: var(--bg-color) !important;
+  box-shadow: none !important;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 45px;
+  align-items: center;
+  margin-top: 35px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.header-content {
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+}
+
+.header-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;  // Ensure content is centered within the div
+  padding-bottom: 15px;
+  transition: all 0.2s ease-in-out;
+  position: relative; // Add position relative for overlay
+
+  // Ensure the header-image maintains a square shape for all screen sizes
+  @media (min-width: 992px) {
+    width: 300px;
+    height: 300px;  // Keep square aspect ratio
+  }
+
+  @media (min-width: 1200px) {
+    width: 450px;
+    height: 450px;  // Keep square aspect ratio
+  }
+
+  @media (max-width: 400px) {
+    width: 97%;
+    height: auto;  // Let height adjust based on content
+  }
+}
+
+.image-container {
+  position: relative;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 12px 12px 10px var(--img-shadow-color);
+}
+
+.image-overlay {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // Darken the image
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.header-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 12px 12px 10px var(--img-shadow-color);
+}
+
+.image-not-found {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;  // Stays square
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--inputbox-bg-color);
+  color: var(--standard-light-text-color);
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.image-not-found.edit-mode:hover {
+  cursor: pointer;
+} 
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+mat-card-subtitle {
+  font-size: 16px;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+mat-card-content {
+  height: 100%;
+}
+
+mat-card-content h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+mat-card-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+mat-card-content p {
+  margin-top: 10px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+
+  button {
+    color: var(--primary-color);
+
+    &:hover {
+      background-color: rgba(var(--primary-color-rgb), 0.1);
+    }
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.ingredient-form,
+.instruction-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.recipe-name {
+  margin-top: 0px;
+}
+
+.delete-ingredient {
+  margin-top: 10px;
+}
+
+.source-field {
+  margin-bottom: -10px;
+}
+
+.source {
+  margin-top: -10px;
+  margin-bottom: -1px;
+}
+
+.description {
+  margin-top: 10px;
+}
+
+app-rating {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.rating-label {
+  margin-top: -10px;
+  font-size: 0.95em;
+  color: var(--standard-light-text-color);
+}
+
+.rating-edit {
+  margin-top: -8px;
+  margin-bottom: 27px;
+}
+
+.rating-edit:hover {
+  cursor: pointer;
+}
+
+// DIRECTIONS SECTION
+ol {
+  list-style-type: none; /* Remove default list styling */
+  padding-left: 0; /* Remove default padding */
+  margin: 0;
+}
+
+.direction {
+  display: flex; /* Use Flexbox to create columns */
+  align-items: flex-start; /* Align items to the top */
+  padding: 8px 0; /* Padding around each item */
+  padding-right: 20px;
+  margin-bottom: 0px; /* Space between directions */
+  background-color: var(--transparent-orange); /* White background for the item */
+  border-left: 5px solid orange; /* Left orange border */
+  transition: background-color 0.3s ease; /* Smooth background transition on hover */
+}
+
+.number {
+  min-width: 30px; /* Fixed width for the number column */
+  margin-left: 20px;
+  margin-right: 0px; /* Space between number and text */
+  font-weight: bold;
+}
+
+.instruction-text {
+  flex-grow: 1; /* Take up the remaining space */
+  font-size: 1em;
+}
+
+/* Hover effect for each list item */
+.direction:hover {
+  background-color: #ff8c0035; /* Light orange background on hover */
+}
+
+// INGREDIENTS SECTION
+.ingredient-item {
+  align-items: center;
+  list-style-type: disc;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+
+.scaler-section {
+  display: flex;
+  border-radius: 8px; /* Slightly smaller corners */
+  overflow: hidden;
+  background-color: #e46300; /* Background color for unselected buttons */
+  width: fit-content; /* Shrink the width to fit the buttons */
+  margin: 0 20px -5px 20px; /* Center horizontally */
+}
+
+.scaler-button {
+  flex: 1;
+  padding: 4px 12px; /* Smaller padding for less height */
+  text-align: center;
+  background-color: transparent; /* Default background for all buttons */
+  color: white;
+  font-size: 0.95rem; /* Smaller font size */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 50px;
+
+  &:hover {
+    background-color: #e67e2f;
+  }
+
+  &.selected {
+    background-color: rgb(244, 186, 131); /* Background for selected button */
+    font-weight: bold;
+    color: black; /* Text color for selected button */
+  }
+}
+
+.custom-button {
+  display: flex;
+  align-items: center; /* Align input vertically with the button text */
+  justify-content: center; /* Center horizontally */
+  padding-bottom: 5px;
+}
+
+.custom-button input {
+  width: 45px; /* Smaller input width */
+  height: 19px; /* Let the input height adjust naturally */
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem; /* Smaller input font size */
+  padding: 2px 4px; /* Adjust padding for better appearance */
+
+  &:focus {
+    outline: none; /* Remove the default focus outline */
+  }
+}
+
+
+
+
+.ingredient-item.cook-mode {
+  list-style-type: none;
+}
+
+.ingredients-list {
+  margin-left: 5px;
+}
+
+/* Default layout for the input fields in the ingredient-form */
+.ingredient-form {
+  display: flex;
+  gap: 10px; /* Space between the fields */
+}
+
+.ingredient-form mat-form-field {
+  flex: 1 1 50px; /* Ensure that the form fields take up space but can shrink */
+}
+
+/* Stack the input fields on small screens */
+@media (max-width: 600px) {
+  .ingredient-form {
+    flex-direction: column; /* Stack the form fields vertically */
+    gap: 0; /* Space between the fields */
+  }
+
+  .ingredient-form mat-form-field {
+    width: 100%; /* Make each field take up the full width */
+    margin-bottom: -5px;
+  }
+
+  .ingredient-item button[mat-icon-button] {
+    margin-top: -10px; 
+    margin-bottom: 5px;
+    margin-left: auto;
+   }
+
+   .recipe-card {
+    font-size: 90%;
+   }
+}
+
+.ingredient-item.edit-mode {
+  list-style-type: disc; /* Bullet points */
+  padding-left: 10px; /* Add space for bullets */
+  margin-bottom: 0px;
+}
+
+/* Custom checkbox styling */
+input[type="checkbox"] {
+  vertical-align: top;
+  margin-left: -28px;
+  margin-right: 5px;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+/* Checkbox appearance when checked */
+input[type="checkbox"]:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+input[type="checkbox"]:hover {
+  border-color: var(--secondary-color);
+}
+
+/* Checkmark styling inside the checkbox */
+input[type="checkbox"]:checked::before {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 16px;
+}
+
+/* Ingredient text styling when checkbox is checked */
+input[type="checkbox"]:checked + .ingredient-text {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+button[mat-raised-button] {
+  margin-right: 10px;
+}
+
+button[mat-icon-button] {
+  margin-left: 10px;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0;
+  }
+}
+
+.comments-section {
+  margin-top: 20px;
+}
+
+.comments-section h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 5px;
+}
+
+.comments-section p {
+  margin-top: 10px;
+}
+
+.comments-section mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.source-container {
+  position: relative;
+  display: block; /* Ensure the container respects its parent width */
+  width: 100%;
+  word-wrap: break-word; /* Break long words if necessary */
+  word-break: break-word; /* Ensure long words break correctly */
+
+  @media (max-width: 400px) {
+    width: 88%;
+  }
+}
+
+.source-container span {
+  width: 100%;
+  word-break: break-word; /* Prevent long unbroken text from overflowing */
+}
+
+.copy-button {
+  position: absolute;
+  transform: translateY(-20%);
+  margin-left: 8px !important;
+  transition: opacity 0.3s ease-in-out;
+
+  @media screen and (max-width: 1268px) {
+    scale: 0.9;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.copy-message {
+  position: absolute;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  opacity: 0;
+  animation: fadeUp 1.5s ease-out forwards;
+}
+
+::ng-deep body.dark-mode .copy-message {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(0, -7px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -45px);
+  }
+}
+
+.source .mat-mdc-icon-button:hover {
+  background-color: #ffffff68 !important;
+}
+
+::ng-deep body.dark-mode .source .mat-mdc-icon-button[_ngcontent-ng-c123374681]:hover {
+  background-color: #47474768 !important;
+}
+
+::ng-deep .button.actions .mat-button[_ngcontent-ng-c589612404] {
+  background-color: var(--primary-color) !important;
+}
+
+/* Container for the Cook Mode related buttons */
+.button-container {
+  display: flex;
+  align-items: center; /* Vertically center the buttons */
+  position: absolute;
+  top: 30px;
+  right: 35px;
+  z-index: 10;
+}
+
+/* Cook mode button */
+.cookmode-button {
+  background-color: var(--primary-color);
+  width: 150px;
+}
+
+.cookmode-button.cook-mode {
+  background-color: var(--accent-color); /* Green for cook mode */
+}
+
+/* Info Button */
+.info-button {
+  margin-right: 5px !important;
+}
+
+/* Info box */
+.info-box {
+  position: absolute;
+  top: 45px; /* Align it below the buttons */
+  right: 0px; /* Align the right edge of the box with the right edge of the container */
+  padding: 0 10px;
+  width: 280px;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14.5px;
+  z-index: 20; /* Ensure the info box is above other elements */
+}
+
+::ng-deep .header-content .mat-mdc-button:not(:disabled) {
+  color: white !important;
+}
+
+::ng-deep .header-content .mat-mdc-button:not(:disabled):hover {
+  background-color: $DARK_PRIMARY_COLOR !important;
+}
+
+// Overriding Material Design Input Field CSS
+// Background Color of Input Box
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+  background-color: var(--inputbox-bg-color) !important;
+}
+
+// Underline Color when you are filling in the input and it satisfies the requirements
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: var(--secondary-color) !important;
+}
+
+// Blinking Line Color that appears when you click in the input box
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  caret-color: var(--standard-text-color) !important;
+}
+
+// Label Text Color when you click in the input box
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+  color: var(--secondary-color) !important;
+}
+
+// All button text color when it is active (clickable)
+::ng-deep .mat-mdc-button:not(:disabled) {
+  color: var(--primary-color) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+// All button text color when it is active (clickable)
+::ng-deep .mat-mdc-button:not(:disabled):hover {
+  background-color: #ff990018 !important;
+}
+
+// Button color when you first hover over it
+::ng-deep .mat-mdc-button .mat-mdc-button-persistent-ripple::before {
+  background-color: #ff990018 !important;
+}
+::ng-deep .mat-mdc-raised-button .mat-mdc-button-persistent-ripple::before {
+  background-color: #ff990018 !important;
+}
+
+// Button color when you click on it (I don't think this is working)
+::ng-deep .mat-mdc-button .mat-mdc-button-persistent-ripple:focus {
+  background-color: #ff990018 !important;
+}
+::ng-deep .mat-mdc-raised-button .mat-mdc-button-persistent-ripple:focus {
+  background-color: #ff990018 !important;
+}
+
+// Default Input Placeholder Text Color
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--standard-light-text-color) !important;
+}
+
+// Default Input Border Bottom Color
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: var(--standard-light-text-color) !important;
+}
+
+// Default Input Text Color 
+::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: var(--standard-text-color) !important;
+}
+
+// Default Trash Icon Color
+::ng-deep .mat-mdc-icon-button {
+  color: var(--standard-light-text-color) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+::ng-deep .mat-mdc-icon-button:hover {
+  background-color: #ff990018 !important;
+}
+
+::ng-deep .mdc-text-field--outlined {
+  .mat-mdc-form-field-flex {
+
+    /* Customizing the border color of the leading, notch, and trailing parts */
+    .mdc-notched-outline__leading {
+      border-color: var(--standard-lightish-text-color) !important;
+    }
+
+    .mdc-notched-outline__notch {
+      border-color: var(--standard-lightish-text-color) !important;
+      border-left: 0 !important;
+    }
+
+    .mdc-notched-outline__trailing {
+      border-color: var(--standard-lightish-text-color) !important;
+    }
+  }
+
+  :focus-within .mdc-notched-outline,
+  :focus-within .mdc-notched-outline__leading,
+  :focus-within .mdc-notched-outline__notch,
+  :focus-within .mdc-notched-outline__trailing {
+    border-color: var(--secondary-color) !important;
+  }
+}
+
+// Main confirmation box styles
+.confirm-box {
+  max-width: 400px;
+  margin: auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #333;
+
+  h2 {
+      font-size: 1.6rem;
+      margin: 0;
+      color: #444;
+  }
+
+  p {
+      font-size: 1rem;
+      margin: 1rem 0;
+      color: #666;
+  }
+
+  .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      width: 100%;
+
+      button {
+          padding: 0.5rem 1rem;
+          font-weight: bold;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &.confirm {
+              background-color: var(--primary-color); // Updated background color
+              color: #fff;
+
+              &:hover {
+                  background-color: #d9393a;
+              }
+          }
+
+          &.cancel {
+              background-color: #ddd;
+              color: #333;
+
+              &:hover {
+                  background-color: #ccc;
+              }
+          }
+      }
+  }
+}
+
+// Rating stars color
+::ng-deep mat-icon[_ngcontent-ng-c1751535156] {
+  color: var(--secondary-color) !important;
+}
+
+::ng-deep .mat-mdc-raised-button:not(:disabled) {
+  color: var(--primary-color) !important;
+  background-color: #ff84002e !important;
+}
+
+@media screen and (max-width: 768px) {
+  ::ng-deep .mat-mdc-card-header {
+    display: block !important;
+  }
+}
+
+// Make fonts smaller on phones
+@media (max-width: 450px) {
+   .recipe-card {
+    font-size: 85%;
+   }
+
+   .recipe-name {
+    font-size: 2.2em;
+   }
+}
+
+::ng-deep .mat-dialog-container {
+  background-color: var(--bg-color) !important;
+  color: var(--standard-text-color) !important;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+::ng-deep .mat-dialog-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-dialog-content {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+::ng-deep .mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::ng-deep .mat-dialog-actions button {
+  color: var(--primary-color) !important;
+  margin-left: 10px;
+}
+
+::ng-deep .mat-dialog-actions button:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1) !important;
+}
+
+// Make ingredients and directions sections be next to each other when screen is wide enough
+.sections-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Adjust space between the two sections */
+}
+
+/* Ensure that they stack vertically when in edit mode */
+.edit-mode .sections-container {
+  display: block;
+}
+
+// Make ingredients and directions sections stack on top of each other when screen gets smaller
+@media (max-width: 1168px) {
+  .sections-container {
+    display: block !important;
+  }
+
+  .ingredient-item {
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+
+  input[type="checkbox"] {
+    margin-left: -34px;
+    margin-right: 10px;
+  }
+
+  .recipe-card {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+// Make ingredients and directions sections have set widths when they're next to each other
+@media (min-width: 1168px) {
+  .ingredients-section.not-edit-mode {
+    width: 29%;
+  }
+  
+  .directions-section.not-edit-mode {
+    width: 71%;
+  }
+}
+
+// When screen is small, make the header stack
+@media (max-width: 768px) {
+  .cookmode-button {
+    position: relative; 
+  }
+
+  .header-image {
+    order: 2; /* Place the image below the button */
+  }
+
+  .header-content {
+    order: 1; /* Place the content above the image */
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
+
+  .source-container span {
+    font-size: .9em;
+  }
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.tag {
+  background-color: transparent;
+  border: var(--primary-color) solid 2.5px;
+  color: var(--primary-color);
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.actions[_ngcontent-ng-c589612404] button.confirm[_ngcontent-ng-c589612404] {
+  background-color: var(--primary-color) !important;
+  color: #fff;
+}
+
+::ng-deep .mat-dialog-container .confirm-box .actions button.confirm {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+::ng-deep .mat-dialog-container .confirm-box .actions .confirm {
+  background-color: var(--primary-color) !important;
+  color: #fff;
+}
+
+::ng-deep .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+  color: var(--standard-light-text-color) !important;
+}
+
+::ng-deep div.mat-mdc-autocomplete-panel {
+  background-color: var(--inputbox-bg-color) !important;
+}

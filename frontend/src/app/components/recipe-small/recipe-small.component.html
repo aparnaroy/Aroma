@@ -1,0 +1,40 @@
+<div>
+    <div class="cards-container" (click)="navigateToRecipe()">
+        <mat-card class="recipe-card">
+            <div class="image-container">
+                <img *ngIf="recipe.image; else noImage" [src]="recipe.image" alt="{{ recipe.name }}">
+                <ng-template #noImage>
+                    <div class="image-not-found">Image not found</div>
+                </ng-template>
+
+                <div class="image-overlay" *ngIf="recipe.description">
+                    <p class="recipe-description">{{ recipe.description }}</p>
+                </div>
+            </div>
+            <mat-card-content class="recipe-content">
+                <mat-card-title class="recipe-title">{{ recipe.name }}</mat-card-title>
+                <app-rating 
+                    class="recipe-rating"
+                    [rating]="recipe.rating" 
+                    [editable]="true" 
+                    (ratingChange)="updateRating($event)"
+                    (click)="stopPropagation($event)">
+                </app-rating>
+
+                <p class="recipe-info ingredients-num">
+                    {{ recipe.ingredients.length }} {{ recipe.ingredients.length === 1 ? 'ingredient' : 'ingredients' }},
+                    {{ recipe.instructions.length }} {{ recipe.instructions.length === 1 ? 'step' : 'steps' }}
+                </p>
+                <p class="recipe-info" *ngIf="recipe._updated">
+                    Last Updated: {{ recipe._updated | date:'mediumDate' }}
+                </p>
+
+                <div class="favorite-heart" [ngClass]="{'favorited': recipe.favorite}" (click)="toggleFavorite($event)">
+                    <span class="material-icons">
+                        {{ recipe.favorite ? 'favorite' : 'favorite_border' }}
+                    </span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

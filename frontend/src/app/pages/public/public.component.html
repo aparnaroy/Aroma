@@ -1,0 +1,166 @@
+<div class="main-wrapper">
+    <div class="header">
+        <a href="/"><img class="logo-public" src="logo.png" alt="Logo" /></a>
+        <div class="top-right-buttons">
+            <div class="toggle-container" (click)="toggleLightDarkMode()">
+                <span class="sun">
+                    <svg viewBox="0 0 16 16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 16 16">
+                        <circle cx="8.5" cy="7.5" r="4.5"></circle>
+                        <path d="M8 0h1v2H8zM8 13h1v2H8zM14 7h2v1h-2zM1 7h2v1H1zM12.035 11.743l.707-.707 1.414 1.414-.707.707zM2.843 2.55l.707-.707 1.415 1.414-.707.707zM2.843 12.45l1.414-1.415.707.707-1.414 1.415zM12.035 3.257l1.414-1.414.708.707-1.415 1.415z"></path>
+                    </svg>
+                </span>
+                <div class="toggle-circle"></div>
+                <span class="moon">
+                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M264,480A232,232,0,0,1,32,248C32,154,86,69.72,169.61,33.33a16,16,0,0,1,21.06,21.06C181.07,76.43,176,104.66,176,136c0,110.28,89.72,200,200,200,31.34,0,59.57-5.07,81.61-14.67a16,16,0,0,1,21.06,21.06C442.28,426,358,480,264,480Z"/>
+                    </svg>
+                </span>
+            </div>
+            <button class="login-button" (click)="goToLoginPage()">Login</button>
+        </div>
+    </div>
+    
+    <div class="corner-design">
+        <img src="corner-design.png" alt="Corner Design" />
+    </div>
+    
+    <div class="content">
+        <div class="text-section">
+            <p class="smallest-text">Delicious food without the stress</p>
+            <h1>Say <span class="h1-accent">Hello</span> to Your Personal Recipe Buddy</h1>
+            <p class="smaller-text">Not sure what to cook, which ingredients you need, or how much to buy? Tired of losing track of recipes or struggling to plan out meals for the week? Your solution is here! We make it easy so you can focus on savoring every bite.</p>
+            <button class="start-button" [routerLink]="['./register']">Start Now</button>
+        </div>
+        <div class="bowl-container">
+            <img src="steam.gif" alt="Steam" class="steam-image" />
+            <img class="bowl-image" src="bowl.png" alt="Bowl Image" />
+        </div>
+    </div>
+
+    <div class="empty-space"></div>
+
+    <section class="cooking-needs-section">
+        <h2 class="section-title">For All Your Cooking Needs</h2>
+        <div class="cooking-needs-items">
+          <div class="need-item">
+            <div class="need-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M96 0C43 0 0 43 0 96L0 416c0 53 43 96 96 96l288 0 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64c17.7 0 32-14.3 32-32l0-320c0-17.7-14.3-32-32-32L384 0 96 0zm0 384l256 0 0 64L96 448c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16zm16 48l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>
+                </svg>
+            </div>
+            <h3>Recipe Keeper</h3>
+            <p>Save all your recipes. Write your own, import from a website, or generate one.</p>
+          </div>
+          <div class="need-item">
+            <div class="need-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"/>
+                </svg>
+            </div>
+            <h3>Meal Planner</h3>
+            <p>Plan out your meals for the week with an interactive calendar.</p>
+          </div>
+          <div class="need-item">
+            <div class="need-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+                </svg>
+            </div>
+            <h3>Grocery Lists</h3>
+            <p>Create grocery lists instantly to get you prepared to chef it up!</p>
+          </div>
+        </div>
+      </section>
+      
+
+    <div class="features">
+        <div class="main-features">
+            <div class="feature">
+                <img src="add-recipes.png" loading="lazy" alt="Add Recipe" class="feature-image">
+                <div class="feature-text">
+                    <h3>Easily Add Your Own Recipes</h3>
+                    <p>Effortlessly create and save your favorite recipes with an intuitive interface. Save all the details you'll ever need, like ingredients, instructions, and notes in one place.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <img src="import-recipes.gif" loading="lazy" alt="Import Recipe" class="feature-image">
+                <div class="feature-text">
+                    <h3>Import Recipes from Any Website</h3>
+                    <p>Say goodbye to endless scrolling through personal recipe stories. Quickly import only the information you need about a recipe from any website by simply pasting a link.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <img src="generate-recipes.gif" loading="lazy" alt="Generate Recipes" class="feature-image">
+                <div class="feature-text">
+                    <h3>Generate Recipes Based on Your Specifications</h3>
+                    <p>Generate personalized recipes by inputting the ingredients you have at hand, dietary preferences, your cravings, and more. Then sit back and watch as AI creates a recipe just for you!</p>
+                </div>
+            </div>
+            <div class="feature">
+                <img src="calendar.png" alt="Plan Meals" loading="lazy" class="feature-image">
+                <div class="feature-text">
+                    <h3>Plan Meals for the Week with an Interactive Calendar</h3>
+                    <p>Simplify your weekly meal prep with an interactive calendar, helping you plan your meals in advance and stay organized. Instantly generate grocery lists based on your meal plan.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <img src="groceries.png" alt="Create Grocery Lists" loading="lazy" class="feature-image">
+                <div class="feature-text">
+                    <h3>Create Grocery Lists Automatically</h3>
+                    <p>Quickly generate grocery lists at any time for any occasion, saving you time and ensuring you never forget an ingredient.</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="additional-features">
+            <h2>Additional Features</h2>
+            <div class="feature">
+                <div class="feature-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                        <path d="M16 64C16 28.7 44.7 0 80 0L304 0c35.3 0 64 28.7 64 64l0 384c0 35.3-28.7 64-64 64L80 512c-35.3 0-64-28.7-64-64L16 64zM144 448c0 8.8 7.2 16 16 16l64 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-64 0c-8.8 0-16 7.2-16 16zM304 64L80 64l0 320 224 0 0-320z"/>
+                    </svg>
+                </div>
+                <h3>Responsive Mobile-Friendly Design</h3>
+                <p>Access your recipes and meal plans on-the-go with a sleek, responsive design that adapts perfectly to any device.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+                    </svg>
+                </div>
+                <h3>Seamless Light and Dark Mode</h3>
+                <p>Switch between light and dark modes effortlessly. We automatically sync to your device's theme for a seamless experience.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                        <path d="M192 64C86 64 0 150 0 256S86 448 192 448l192 0c106 0 192-86 192-192s-86-192-192-192L192 64zm192 96a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/>
+                    </svg>
+                </div>
+                <h3>Cook Mode: Hands-Free Cooking</h3>
+                <p>Enjoy a hands-free cooking experience with Cook Mode, allowing you to follow recipes without touching your device.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+                    </svg>
+                </div>
+                <h3>Easily Search Through Your Recipes</h3>
+                <p>Find your favorite recipes in seconds with a powerful search feature, whether you're looking by ingredient, tag, or description.</p>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="bottom-text">Never wonder what to make again. Sign up today!</h2>
+
+    <div class="footer">
+        <p>&copy; 2024 Aroma. All rights reserved.</p>
+        <p>Follow us on:
+            <a href="#">Facebook</a> |
+            <a href="#">Twitter</a> |
+            <a href="#">Instagram</a>
+        </p>
+    </div>
+</div>

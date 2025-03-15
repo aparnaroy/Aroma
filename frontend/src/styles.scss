@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Import font from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Karla:ital,wght@0,200..800;1,200..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+// Set font variables
+$FONT: "Lato", sans-serif;
+
+html, body { 
+    height: 100%; 
+    margin: 0;
+    // overflow: auto;
+}
+
+body { 
+    margin: 0; 
+    font-family: $FONT; 
+}
+
+// Default colors
+:root {
+    --primary-color: #d84202;  // Dark Orange
+    --secondary-color: #f67e0a;  // Orange
+    --tertiary-color: #fcc340;  // Yellow
+    --accent-color: #388128;  // Green
+    --text-color: #333;  // Dark Gray
+    --light-text-color: #666; // Light gray
+    --standard-text-color: black;  // Black
+    --standard-light-text-color: #666; // Light gray
+    --standard-lightish-text-color: #7b7b7b; 
+    --bg-color: #fff;  // White
+    --accent-bg-color: #efdbc6;  // Tan
+    --dark-accent-bg-color: #f9cb9f;  // Dark Tan
+    --dark2-accent-bg-color: #e9bf98;
+    --inputbox-bg-color: #eae7e7;
+    --sidenav-color: #efdbc6;
+    --transparent-orange: #ff840017;
+    --img-shadow-color: rgb(224, 92, 39);
+    --recipe-card-color: #f9f9f9;
+    --bottombar-color: #faefe7;
+    --light-gray: #ebebeb;
+    --selected-item-color: #e4c6a7;
+    --light-button-color: #d2d2d2;
+    --features-color: #fff5e6;
+}
+
+// Extra colors
+$DARK_PRIMARY_COLOR: #bf2e1c;  // Red
+$BRIGHT_PRIMARY_COLOR: #ef2828;  // Bright Red
+$BRIGHT_SECONDARY_COLOR: #f7870c;  // Bright Orange
+
+// Dark mode colors
+.dark-mode {
+    --text-color: #f1e0c8;  // Tan
+    --light-text-color: #a9a49a; // Light Tan
+    --standard-text-color: #eaeaea;  // White-ish
+    --standard-light-text-color: #979797; // Light gray
+    --standard-lightish-text-color: #6a6a6a; 
+    --bg-color: #171717;  // Even Darker Gray
+    --accent-bg-color: #222222;  // Very Dark Gray
+    --dark-accent-bg-color: #383838;  // Lighter Dark Gray
+    --dark2-accent-bg-color: #383838;
+    --inputbox-bg-color: #262626;
+    --sidenav-color: #282828;
+    --transparent-orange: #ff840022;
+    --img-shadow-color: rgba(209, 67, 11, 0.54);
+    --recipe-card-color: #1f1f1f;
+    --bottombar-color: #222222;
+    --light-gray: #2c2c2c;
+    --selected-item-color: #383838;
+    --light-button-color: #3f3f3f;
+    --features-color: #333333;
+}

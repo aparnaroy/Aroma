@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 18vw 1fr;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-column {
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+/* Show sidebar when 'show' class is added */
+.menu-column.show {
+  transform: translateX(0);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); // Semi-transparent black
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5; // Just below the menu but above main content
+  pointer-events: none; // Prevent it from blocking clicks when not visible
+}
+
+.container {
+  height: 100vh;
+  background-color: var(--bg-color);
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.container-with-topnav {
+  padding-top: 70px; // Make space for topnav
+  // padding-left: 35px;
+  // padding-right: 35px;
+  z-index: 1;
+  color: var(--standard-text-color);
+}
+
+app-menu {
+  z-index: 3;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.menu-toggle-button {
+  display: none;
+  width: 45px;
+  position: absolute;
+  top: 22px;
+  left: 17px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  fill: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.menu-toggle-button:hover {
+  fill: var(--light-text-color);
+}
+
+.menu-toggle-right {
+  left: calc(50vw - 65px);
+  fill: var(--standard-text-color);
+  top: 23px;
+}
+
+
+/* When sidenav gets too thin */
+@media (max-width: 1130px) {
+  .app-grid {
+    grid-template-columns: 22vw 1fr;
+  }
+}
+
+/* When sidenav gets too thin */
+@media (max-width: 930px) {
+  .app-grid {
+    grid-template-columns: 25vw 1fr;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-toggle-button {
+    display: block;
+  }
+
+  .menu-column {
+    position: fixed;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 5;
+  }
+
+  /* Only show overlay on small screens */
+  .overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+/* Super Small Screens */
+@media (max-width: 460px) {
+  .menu-toggle-right {
+    left: calc(60vw - 60px);
+  }
+}
+

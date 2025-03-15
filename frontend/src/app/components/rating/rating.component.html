@@ -1,0 +1,6 @@
+<div class="stars">
+    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+        <mat-icon *ngIf="i < rating" (click)="setRating(i + 1)">star</mat-icon>
+        <mat-icon *ngIf="i >= rating" (click)="setRating(i + 1)">star_border</mat-icon>
+    </ng-container>
+</div>

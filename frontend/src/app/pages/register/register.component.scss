@@ -1,0 +1,458 @@
+@import '../../../styles.scss';
+
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	overflow-y: hidden; // No scrolling
+}
+
+.logo-register {
+	position: absolute;
+	top: 15px;
+	left: 30px;
+	height: 45px; 
+	cursor: pointer;
+}
+  
+.register-container {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	background-color: var(--bg-color);
+}
+  
+.form-container {
+	margin-top: 25px;
+	flex: .64;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo-container-register { 
+	display: none;
+}
+
+mat-card {
+	max-width: 450px;
+	width: 100%;
+	box-shadow: none;
+	border-radius: 20px; 
+	margin-left: 20px;
+	margin-right: 20px;
+	background-color: var(--bg-color);
+}
+  
+mat-card-title {
+	display: flex;
+	font-family: "Lato", sans-serif;
+	font-weight: 600;
+	font-size: 2.3em;
+	margin-left: 15px;
+	margin-bottom: 35px;
+	color: var(--standard-text-color);
+}
+
+mat-card-content {
+	display: flex;
+	transition: all 0.3s ease-in-out;
+}
+
+form mat-form-field {
+	width: 100%;
+	// min-width: 300px;
+	margin-bottom: 15px;
+}
+
+.password-requirements {
+	margin-top: -25px;
+	margin-bottom: 20px;
+
+	p {
+	  display: flex;
+	  align-items: center;
+	  color: #666;
+	  font-size: 0.78em;
+	  margin-bottom: -15px;
+  
+	  mat-icon {
+		margin-right: 5px;
+		scale: .63;
+		transition: all 0.2s ease-in-out;
+	  }
+
+	  &.met {
+		color: var(--accent-color);
+  
+		mat-icon {
+		  color: var(--accent-color);
+		}
+	  }
+  
+	  &.not-met {
+		color: #d01e0a;
+  
+		mat-icon {
+		  color: #d01e0a;
+		}
+	  }
+  
+	  &.default {
+		color: var(--standard-light-text-color); // Gray color before touched
+  
+		mat-icon {
+		  color: var(--standard-light-text-color);
+		}
+	  }
+	}
+}
+
+
+// Overriding Material Design Input Field CSS
+  // Background Color of Input Box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled){
+	background-color: var(--inputbox-bg-color) !important;
+  }
+  
+  // Label Text Color when you haven't correctly filled in the input
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label {
+	color: #d01e0a !important;
+  }
+  
+  // Underline Color when you are filling in the input but it doesn't satisfy the reqs yet
+  ::ng-deep .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+	border-bottom-color: #d01e0a !important;
+  }
+  
+  // Underline Color when you are filling in the input and it satisfies the requirements
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+	border-bottom-color: var(--secondary-color) !important;
+  }
+  
+  // Blinking Line Color that appears when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+	caret-color: var(--standard-text-color) !important;
+  }
+  
+  // Label Text Color when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+	color: var(--standard-text-color) !important;
+  }
+  
+  // Register button text color when it is active (clickable)
+  ::ng-deep .mat-mdc-button:not(:disabled) {
+	color: white !important;
+  }
+
+  // Default Input Placeholder Text Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+	color: var(--standard-light-text-color) !important;
+  }
+
+  // Default Input Border Bottom Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+	border-bottom-color: var(--standard-light-text-color) !important;
+  }
+
+  // Default Input Text Color 
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--standard-text-color) !important;
+  }
+
+  // Default Eye Icon Color
+  ::ng-deep .mat-mdc-icon-button {
+	color: var(--standard-light-text-color) !important;
+  }
+
+  ::ng-deep .mdc-text-field--outlined {
+	.mat-mdc-form-field-flex {
+	  /* Customizing the border color of the leading, notch, and trailing parts */
+	  .mdc-notched-outline__leading {
+		border-color: var(--standard-lightish-text-color) !important;
+		// border-width: 2px !important;
+	  }
+  
+	  .mdc-notched-outline__notch {
+		border-color: var(--standard-lightish-text-color) !important;
+		// border-width: 2px !important;
+		border-left: 0 !important;
+	  }
+  
+	  .mdc-notched-outline__trailing {
+		border-color: var(--standard-lightish-text-color) !important;
+		// border-width: 2px !important;
+	  }
+	}
+	
+   :focus-within .mdc-notched-outline,
+	  :focus-within .mdc-notched-outline__leading,
+	  :focus-within .mdc-notched-outline__notch,
+	  :focus-within .mdc-notched-outline__trailing {
+		border-color: var(--secondary-color) !important;
+	  }
+  }
+
+
+
+
+
+.eye-button {
+	margin-right: 10px;
+}
+
+.button {
+	display: flex;
+	justify-content: flex-end;
+}
+
+  
+.register-button {
+	background-color: var(--primary-color);
+	color: white; 
+	font-size: 1.3em;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer; 
+	width: 100%;
+	height: 55px;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	transition: background-color 0.3s;
+	transition: all 0.2s ease-in-out;
+  
+	&:hover {
+	  	background-color: $DARK_PRIMARY_COLOR;
+	}
+}
+
+.error-msg {
+	font-size: 1em;
+	margin-top: 30px;
+}
+
+.signin-text {
+	margin-top: 2px;
+	font-size: 1.05em;
+	color: var(--standard-text-color);
+}
+
+
+.design-container {
+	flex: 1;
+	position: relative;
+	background-color: var(--accent-bg-color);
+}
+  
+.top-design,
+.bottom-bowl-design {
+	position: absolute;
+	right: 0;
+}
+  
+.top-design {
+	top: 0;
+}
+  
+.bottom-bowl-design {
+	bottom: -5px;
+}
+  
+.top-design img,
+.bottom-bowl-design img {
+	width: 60.99vw;
+	height: auto;
+}
+  
+
+.text-content {
+    position: absolute;
+    top: 22.5vw; /* Adjust this for desired distance from the bottom */
+    left: 70px; /* Adjust as needed for alignment */
+    color: var(--text-color); /* Text color */
+    text-align: left; /* Align text to the left */
+	transition: all 0.3s ease-in-out;
+}
+
+.big-text {
+    font-size: 3.3em; /* Large text */
+    font-weight: bold;
+    margin: 0;
+	padding-bottom: 20px;
+}
+
+.medium-text {
+    font-size: 1.4em; /* Medium text */
+    margin-top: 0px;
+	font-weight: 600;
+	margin-right: 70px;
+}
+
+.small-text {
+    font-size: 1.15em; /* Small text */
+	line-height: 1.5;
+	color: var(--standard-light-text-color);;
+	margin-top: -5px;
+	margin-right: 330px;
+}
+
+
+// When design starts to get cut off
+@media screen and (max-width: 953px) {
+	:host {
+		flex-direction: column;
+		background-color: var(--accent-bg-color); 
+		position: relative; /* Set up for absolute positioning of children */
+	}
+	
+	.register-container {
+		display: block; /* Remove flex properties */
+		position: relative; /* Allow absolute children to position relative to this container */
+		width: 100%;
+		height: 100vh; 
+	}
+	
+	.form-container {
+		margin-top: calc(50vh - 300px); /* Center the form */
+		position: absolute;
+		// top: 50%;
+		// left: 50%;
+		// transform: translate(-50%, -50%); 
+		width: 100%;
+		z-index: 10; /* Bring above the design */
+	}
+
+	.logo-container-register {
+		display: block;
+		position: absolute;
+		top: 20px;
+		left: 29px; 
+		z-index: 3; 
+	}
+	
+	.logo-container-register img {
+		width: 90px;
+		height: auto;
+	}
+	
+	mat-card {
+		width: 100%;
+		padding: 20px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		max-width: 450px;
+		min-width: none;
+	}
+	  
+	mat-card-title {
+		font-size: 2.1em;
+		margin-bottom: 28px;
+		margin-top: 60px;
+		transition: font-size 0.15s ease-in-out;
+	}
+	  
+	form mat-form-field {
+		margin-bottom: 8px;
+	}
+
+	.register-button {
+		height: 53px;
+		margin-top: 10px;
+		margin-bottom: 15px;
+	}
+
+	.error-msg {
+		margin-top: 0;
+		font-size: .93em;
+		margin-bottom: 5px;
+	}
+
+	.signin-text {
+		font-size: 1em;
+	}
+
+	.design-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	
+	.top-design,
+	.bottom-bowl-design {
+		position: absolute;
+		width: 100%;
+	}
+	
+	.top-design {
+		top: 0;
+	}
+	
+	.bottom-bowl-design {
+		bottom: -5px;
+	}
+	
+	.top-design img,
+	.bottom-bowl-design img {
+		width: 100%;
+		height: auto;
+	}
+	
+	.text-content {
+		display: none;
+	}
+
+	.password-requirements {
+		margin-top: -20px;
+		margin-bottom: 25px;
+	}
+}
+
+
+// Phone screens
+@media screen and (max-width: 520px) {
+	mat-card {
+		padding: 15px;
+	}
+
+	mat-card-title {
+	  	font-size: 1.8em;
+	  	margin-bottom: 20px;
+	}
+  
+	.register-button {
+	  	margin-top: 5px;
+	}
+  
+	.signin-text {
+		font-size: 1em;
+		margin-bottom: -5px;
+	}
+}
+
+
+// Making right side text stay aligned with image
+@media screen and (max-width: 1350px) {
+	.text-content {
+		top: 24.5vw;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.text-content {
+		top: 25.5vw;
+	}
+}
+@media screen and (max-width: 1070px) {
+	.text-content {
+		top: 29vw;
+	}
+	.small-text {
+		margin-right: 70px;
+	}
+}

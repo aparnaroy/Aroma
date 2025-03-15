@@ -1,0 +1,22 @@
+<app-topnav *ngIf="!isNoMenuPath(currentRoute)"></app-topnav>
+<div class="app-grid">    
+    <!-- Toggle button for the sidenav menu -->
+    <button class="menu-toggle-button" *ngIf="!isNoMenuPath(currentRoute)" (click)="toggleMenu()" [ngClass]="{'menu-toggle-right': showMenu}">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19,8H5A1,1,0,0,1,5,6H19a1,1,0,0,1,0,2Z"/>
+            <path d="M19,13H5a1,1,0,0,1,0-2H19a1,1,0,0,1,0,2Z"/>
+            <path d="M19,18H5a1,1,0,0,1,0-2H19a1,1,0,0,1,0,2Z"/>
+        </svg>
+    </button>
+
+    <!-- Overlay, only visible when `showMenu` is true on small screens -->
+    <div class="overlay" [ngClass]="{'visible': showMenu}" (click)="toggleMenu()"></div>
+
+    <!-- Side navigation menu -->
+    <app-menu [ngClass]="{'show': showMenu}" class="menu-column"></app-menu>
+
+    <!-- Main container for the rest of the content -->
+    <div class="container" [class.full-width]="!showMenu" (scroll)="onScroll($event)" [ngClass]="{ 'container-with-topnav': !isNoMenuPath(currentRoute) }">
+        <router-outlet></router-outlet>
+    </div>
+</div>

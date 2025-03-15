@@ -1,0 +1,81 @@
+<div id="selection-screen">
+    <div id="popup-box">
+        <div class="popup-menu-bar">
+                <input type="text" id="input-box" placeholder="Search Recipes..." (keypress)="onEnterKey($event)" #filter>
+                <button class="clear-button" (click)="clearInput()">X</button>
+            <button class="search-button" type="button" (click)="filterResults(filter.value)">Search</button>
+            <button class="add-button" type="button" (click)="addCheckedRecipes()">Add</button>
+            <button class="exit-button" type="button" (click)="closeWindow()">X</button>
+        </div>
+        <div id="recipe-grid" class="recipes-grid">
+            <div *ngFor="let recipe of filteredRecipes; let i = index">
+                <div class="recipe-display">
+                    <app-recipe-small class="scaled-down" [recipe]="recipe"></app-recipe-small>
+                    <input class="checkboxes" type="checkbox" [id]="'checkbox-' + i" (change)="onCheckboxChange(recipe, $event)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="calendar" id="month-view">
+    <h1>This Week</h1>
+
+<div class="calendar-header">
+    <div class="weekday-title">Sunday</div>
+    <div class="weekday-title">Monday</div>
+    <div class="weekday-title">Tuesday</div>
+    <div class="weekday-title">Wednesday</div>
+    <div class="weekday-title">Thursday</div>
+    <div class="weekday-title">Friday</div>
+    <div class="weekday-title">Saturday</div>
+</div>
+<div id="calendar-contents">
+        <div id="day-8" class="weekend-box">
+            <div class="week-box-header">
+                <div>8</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-8')">+</button>
+            </div>
+            
+        </div>
+        <div id="day-9" class="calendar-day">
+            <div class="week-box-header">
+                <div>9</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-9')">+</button>
+            </div>
+        </div>
+        <div id="day-10" class="calendar-day">
+            <div class="week-box-header">
+                <div>10</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-10')">+</button>
+            </div>
+        </div>
+        <div id="day-11" class="calendar-day">
+            <div class="week-box-header">
+                <div>11</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-11')">+</button>
+            </div>
+        </div>
+        <div id="day-12" class="calendar-day">
+            <div class="week-box-header">
+                <div>12</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-12')">+</button>
+            </div>
+        </div>
+        <div id="day-13" class="calendar-day">
+            <div class="week-box-header">
+                <div>13</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-13')">+</button>
+            </div>
+        </div>
+        <div id="day-14" class="weekend-box">
+            <div class="week-box-header">
+                <div>14</div>
+                <button class="add-recipe-button" (click)="addRecipe('day-14')">+</button>
+            </div>
+        </div> 
+</div>
+<button class="generate-grocery-list-button" (click)="generateGroceryList()">Generate Grocery List</button>
+<div id="grocery-list"><strong>List:</strong></div>
+</div>

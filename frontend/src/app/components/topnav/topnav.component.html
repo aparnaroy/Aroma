@@ -1,0 +1,32 @@
+<nav class="top-nav"></nav>
+<div class="top-right-buttons" [ngStyle]="{'gap.px': profileColor ? 30 : 0}">
+   <div class="toggle-container" (click)="toggleLightDarkMode()">
+       <span class="sun">
+           <svg viewBox="0 0 16 16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 16 16">
+               <circle cx="8.5" cy="7.5" r="4.5"></circle>
+               <path d="M8 0h1v2H8zM8 13h1v2H8zM14 7h2v1h-2zM1 7h2v1H1zM12.035 11.743l.707-.707 1.414 1.414-.707.707zM2.843 2.55l.707-.707 1.415 1.414-.707.707zM2.843 12.45l1.414-1.415.707.707-1.414 1.415zM12.035 3.257l1.414-1.414.708.707-1.415 1.415z"></path>
+           </svg>
+       </span>
+       <div class="toggle-circle"></div>
+       <span class="moon">
+           <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+               <path d="M264,480A232,232,0,0,1,32,248C32,154,86,69.72,169.61,33.33a16,16,0,0,1,21.06,21.06C181.07,76.43,176,104.66,176,136c0,110.28,89.72,200,200,200,31.34,0,59.57-5.07,81.61-14.67a16,16,0,0,1,21.06,21.06C442.28,426,358,480,264,480Z"/>
+           </svg>
+       </span>
+   </div>
+
+   <div class="profile-icon-container">
+        <div class="profile-circle" *ngIf="profileColor" [style.backgroundColor]="profileColor" (click)="toggleProfileMenu()">
+            {{ profileInitial }}
+        </div>
+        <div class="profile-menu" *ngIf="profileMenuVisible">
+            <div class="email">
+                {{ userEmail }}
+            </div>
+            <ul>
+                <li (click)="goToSettings()">Settings</li>
+                <li (click)="logout()">Logout</li>
+            </ul>
+        </div>
+   </div>
+</div>

@@ -1,0 +1,1031 @@
+@import '../../../styles.scss';
+
+$breakpoint: 768px; /* Adjust this value as necessary */
+
+.home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+
+    @media screen and (max-width: 768px) {
+        padding: 1.5rem;
+    }
+
+
+    .import-modal {
+      background: linear-gradient(135deg, $DARK_PRIMARY_COLOR, var(--primary-color), var(--secondary-color), var(--tertiary-color));
+    }
+
+    .modal {
+      display: flex;
+      // align-items: center;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      width: 560px;
+      margin: 0 10px;
+      padding: 0 1vw;
+      border-radius: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      color: white;
+      z-index: 101; /* Above overlay */
+
+      @media screen and (max-width: 768px) {
+        max-width: 90%;
+    }
+    
+      .modal-content {
+        text-align: center;
+        width: 100%;
+        margin-top: 35px;
+        margin-bottom: 35px;
+    
+        h2 {
+          font-weight: 750;
+          font-size: 2.2em;
+          margin-top: 0;
+        }
+    
+        p {
+          font-size: 1.2em;
+          margin-top: 45px;
+          margin-bottom: 10px;
+        }
+
+        .ai-description {
+          font-size: .95em;
+          color: #dfdfdf;
+        } 
+    
+        mat-form-field {
+          width: 90%;
+          margin-top: 15px;
+          margin-bottom: 0.5rem;
+        }
+
+        .button-group {
+          display: flex;
+          flex-direction: column;
+          gap: 10px; /* Adjust spacing between buttons as needed */
+          margin: 0 28px;
+          align-items: center;
+        }
+    
+        .import-button {
+          margin-top: 20px;
+          width: 100%;
+          border-radius: 15px;
+        }
+
+        .cancel-button {
+          font-size: 1em;
+          margin-top: 5px;
+          margin-bottom: 0;
+          width: 60px;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            cursor: pointer;
+            color: #d0d0d0;
+          }
+        }
+
+        @media screen and (max-width: 500px) {
+          h2 {
+            font-weight: 750;
+            font-size: 1.8em;
+            margin-top: 0;
+          }
+      
+          p {
+            font-size: 1.05em;
+            margin-top: 45px;
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+
+          .ai-description {
+            font-size: .89em;
+            margin-left: 10px;
+            margin-right: 10px;
+          } 
+      
+          mat-form-field {
+            width: 90%;
+            margin-top: 15px;
+            margin-bottom: 0.5rem;
+          }
+
+          .button-group {
+            margin: 0 20px;
+          }
+      
+          .import-button {
+            margin-top: 15px;
+          }
+        }
+
+        ::ng-deep .mdc-text-field--outlined {
+          .mat-mdc-form-field-flex {
+            width: 100%;
+            height: auto; // Height of recipeURL bar
+      
+            /* Customizing the border color of the leading, notch, and trailing parts */
+            .mdc-notched-outline__leading {
+              border-color: var(--standard-lightish-text-color) !important;
+            }
+      
+            .mdc-notched-outline__notch {
+              border-color: var(--standard-lightish-text-color) !important;
+              border-left: 0 !important;
+            }
+      
+            .mdc-notched-outline__trailing {
+              border-color: var(--standard-lightish-text-color) !important;
+            }
+          }
+      
+          :focus-within .mdc-notched-outline,
+          :focus-within .mdc-notched-outline__leading,
+          :focus-within .mdc-notched-outline__notch,
+          :focus-within .mdc-notched-outline__trailing {
+            border-color: var(--standard-lightish-text-color) !important;
+          }
+        }
+        
+        // Make recipeURL bar placeholder text be in the vertical center
+        ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+          padding-bottom: 2px !important;
+        }
+        
+        // Make cursor inside recipeURL bar be in the vertical center
+        ::ng-deep .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix {
+          padding-top: 15px !important;
+        }
+
+        // Background Color of Input Box
+        ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+          border-radius: 4px;
+          background-color: #eae7e7 !important;
+        }
+
+        // Label Text Color when you click in the input box
+        ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+          color: var(--standard-lightish-text-color) !important;
+        }
+
+        // Default Input Text Color 
+        ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+          color: black !important;
+        }
+
+        // Blinking Line Color that appears when you click in the input box
+        ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+          caret-color: black !important;
+        }
+      }
+    }
+
+
+    .loading-image {
+      width: 350px;
+    }
+
+    h3 {
+      font-size: 2em;
+      margin-top: 0px;
+    }
+
+    // .loading-text {
+    //   margin-top: -20px;
+    //   font-size: 1em;
+    // }
+    
+    .loading-text p {
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Smooth fade transition */
+      display: none; /* Hide all messages by default */
+    }
+    
+    .loading-text p.active {
+      display: block; /* Only show the active message */
+      opacity: 1; /* Make the active message fully visible */
+      animation: fadeInOut 4s ease-in-out; /* Apply the fade in/out animation */
+    }
+    
+    /* Keyframes for the fade in/out effect */
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+
+    @media screen and (max-width: 500px) {
+      .loading-image {
+        width: 70vw;
+      }
+  
+      h3 {
+        font-size: 1.85em;
+        margin-top: 10px;
+        margin-bottom: 40px;
+      }
+  
+      .loading-text {
+        margin-top: 5px;
+        font-size: 1em;
+      } 
+    }
+
+    @media screen and (max-width: 400px) {
+      h3 {
+        font-size: 1.85em;
+        margin-top: 0px;
+        margin-bottom: 60px;
+      }
+  
+      .loading-text {
+        margin-top: 25px;
+        font-size: 1em;
+      } 
+    }
+
+    .error-message {
+      position: absolute;
+      top: 160px;
+      background-color: rgb(206, 11, 11);
+      color: white;
+      padding: 0 20px;
+      padding-top: 13px;
+      padding-bottom: 15px;
+      border-radius: 15px;
+      z-index: 103;
+      font-size: 17px;
+      font-weight: bold;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0; /* Initially hidden */
+      transform: translateY(-20px); /* Slide up when hidden */
+      transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
+  
+      svg {
+          width: 19px;
+          fill: white;
+          margin-left: 8px;
+          margin-bottom: -3.3px;
+          cursor: pointer;
+      }
+    }
+    
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .error-message.fade-out {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+  
+    .title-bar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        padding-bottom: 0.5em;
+        padding-left: 0.5em;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 0rem;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: bold;
+            margin: 0;
+            color: var(--standard-text-color);
+        }
+
+        .search-bar {
+            display: flex;
+            margin-top: 0;
+            margin-bottom: -25px;
+
+            @media screen and (max-width: $breakpoint) {
+              margin-top: 20px;
+            }
+
+            mat-form-field {
+                margin-right: 10px; // Add some space between the search bar and the filter button
+            }
+
+            .filter-button {
+                height: 50px; // Match the height of the search bar
+                width: 50px; 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                mat-icon {
+                    font-size: 25px; // Make the icon bigger
+                }
+            }
+        }
+    }
+
+    mat-menu {
+        max-width: 100%; // Ensure the menu doesn't exceed the screen width
+        white-space: normal; // Allow text to wrap
+        .mat-menu-item {
+            display: flex;
+            align-items: center;
+            white-space: normal; // Allow text to wrap
+        }
+    }
+
+    .grid-container {
+      display: grid;
+      gap: 1rem;
+      width: 100%;
+      max-width: 1400px;
+      padding-bottom: 70px;
+      flex-grow: 1;
+      overflow-y: auto; // Allows scrolling within the grid if content is too long
+  
+      // Responsive grid layout
+      @media (min-width: 600px) {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)) !important;
+      }
+      
+      @media (max-width: 768px) {
+        gap: .8rem;
+      }
+  
+      .spinner-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-column: 1 / -1;
+        height: 300px;
+      }
+
+      ::ng-deep mat-spinner circle {
+        stroke: var(--primary-color) !important;
+      }
+  
+      .no-recipes-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+      }
+    }
+  
+    
+    .add-recipe-button {
+        position: fixed; /* Fixed position */
+        bottom: 80px; /* 80px from the bottom */
+        right: 40px;
+        background: linear-gradient(-35deg, $DARK_PRIMARY_COLOR, var(--primary-color), var(--secondary-color), var(--tertiary-color));
+        color: white; /* White icon color */
+        z-index: 20; /* Ensure the button is above other elements */
+        box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12); /* Material shadow */
+        transition: all 0.3s ease;
+        
+        &:hover {
+          mat-icon {
+              transform: rotate(180deg);
+          }
+        }
+        &:hover + .add-menu {
+          display: block;
+        }
+          
+        mat-icon {
+            font-weight: bold;
+            transition: transform 0.4s ease; // Smooth transition for spinning in both directions
+            transform: rotate(0deg); // Ensure it starts in the default position
+        }
+    }
+
+    .add-menu {
+        display: none;
+        position: absolute;
+        bottom: 90px;
+        right: 103px;
+        background-color: var(--accent-bg-color);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 21;
+        padding: 0.5rem;
+        border-radius: 4px;
+
+        // Add space around the menu where hovering works
+        &:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            z-index: -1;
+        }
+    
+        button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: .93em;
+            font-weight: 550;
+            padding: .7rem 0.5rem;
+            background: none;
+            border: none;
+            color: var(--standard-text-color);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+
+            svg {
+              width: 20px;
+              margin-top: -10px;
+              margin-bottom: -1px; // Make the text centered vertically
+              margin-right: 5px;
+            }
+    
+            &:hover {
+              background-color: var(--dark2-accent-bg-color);
+            }
+        }
+
+        &:hover {
+            display: block;
+        }
+    }
+
+  
+    .paginator {
+        position: fixed;
+        bottom: 0;
+        width: 100%; /* Take up the full width of the container */
+        display: flex;
+        justify-content: center; /* Center the paginator content */
+        margin-top: auto; /* Push the paginator to the bottom of the container */
+        background-color: var(--bottombar-color); /* Match the background color */
+        color: var(--standard-text-color);
+        // font-size: 20px;
+    }
+
+  // Overriding Material Design Input Field CSS
+  // Background Color of Input Box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    background-color: var(--bg-color) !important;
+  }
+
+  // Underline Color when you are filling in the input and it satisfies the requirements
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: var(--primary-color) !important;
+  }
+
+  // Blinking Line Color that appears when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    caret-color: var(--standard-text-color) !important;
+  }
+
+  // Label Text Color when you click in the input box
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+    color: var(--primary-color) !important;
+  }
+
+  // All button text color when it is active (clickable)
+  ::ng-deep .mat-mdc-button:not(:disabled) {
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease-in-out !important;
+  }
+
+  // All button text color when it is active (clickable)
+  ::ng-deep .mat-mdc-button:not(:disabled):hover {
+    background-color: #ff990018 !important;
+  }
+
+  // Default Input Placeholder Text Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: var(--standard-light-text-color) !important;
+  }
+
+  // Default Input Border Bottom Color
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    border-bottom-color: var(--standard-light-text-color) !important;
+  }
+
+  // Default Input Text Color 
+  ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: var(--standard-text-color) !important;
+  }
+
+  // Default Trash Icon Color
+  ::ng-deep .mat-mdc-icon-button {
+    color: var(--standard-light-text-color) !important;
+    transition: all 0.3s ease-in-out !important;
+  }
+
+  // ::ng-deep .mat-mdc-icon-button:hover {
+  //   background-color: #ff990018 !important;
+  // }
+
+  ::ng-deep .mdc-text-field--outlined {
+    .mat-mdc-form-field-flex {
+      width: 300px;
+      height: 50px; // Height of search bar
+
+      /* Customizing the border color of the leading, notch, and trailing parts */
+      .mdc-notched-outline__leading {
+        border-color: var(--standard-lightish-text-color) !important;
+        // border-width: 2px !important;
+      }
+
+      .mdc-notched-outline__notch {
+        border-color: var(--standard-lightish-text-color) !important;
+        // border-width: 2px !important;
+        border-left: 0 !important;
+      }
+
+      .mdc-notched-outline__trailing {
+        border-color: var(--standard-lightish-text-color) !important;
+        // border-width: 2px !important;
+      }
+    }
+
+    :focus-within .mdc-notched-outline,
+    :focus-within .mdc-notched-outline__leading,
+    :focus-within .mdc-notched-outline__notch,
+    :focus-within .mdc-notched-outline__trailing {
+      border-color: var(--primary-color) !important;
+    }
+  }
+}
+
+// Make search bar placeholder text be in the vertical center
+::ng-deep .home .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+  padding-bottom: 7px !important;
+}
+
+// Make cursor inside search bar be in the vertical center
+::ng-deep .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix {
+  padding-top: 13px !important;
+}
+
+// Search icon button
+::ng-deep .search-bar .mat-mdc-icon-button {
+  margin-right: 5px;
+  background-color: none;
+}
+
+::ng-deep .search-bar .mat-mdc-icon-button:hover {
+  background-color: none !important;
+  color: var(--primary-color) !important;
+}
+
+
+
+.generate-option svg {
+  fill: var(--accent-color);
+}
+
+.import-option svg {
+  fill: #f2a900;
+  margin-left: -3px;
+}
+
+.add-option svg {
+  width: 19px !important;
+  fill: var(--primary-color);
+  margin-bottom: -3px !important;
+}
+  
+// Rating stars color
+::ng-deep mat-icon[_ngcontent-ng-c1751535156] {
+    color: var(--secondary-color) !important;
+    scale: .9;
+    width: .95em;
+    margin-top: -10px;
+    margin-left: -2px;
+}
+
+// Overriding default paginator styles
+.paginator {
+  // font-size: 0.8em;
+
+  // Paginator icons color
+  ::ng-deep .mat-mdc-icon-button[disabled] .mat-mdc-paginator-icon {
+      fill: rgba(106, 106, 106, 0.38) !important;
+  }
+
+  // Arrow color of page select box
+  ::ng-deep .mat-mdc-select-arrow {
+      color: var(--standard-light-text-color) !important;
+      transition: all 0.2s ease-in-out !important;
+  }
+
+  // Arrow color when page select box is clicked
+  ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+      color: var(--primary-color) !important;
+      transform: rotate(180deg);
+  }
+
+  // How far arrow is from the page select box
+  ::ng-deep .mdc-text-field--outlined .mat-mdc-form-field-flex {
+      width: 55px;
+  }
+
+  // Size of page select area
+  ::ng-deep .mat-mdc-form-field-infix {
+    width: 40px;
+  }
+
+  // Text color inside page select box
+  ::ng-deep .mat-mdc-select {
+    color: var(--standard-text-color) !important;
+  }
+
+  // Page size select box
+  ::ng-deep .mat-mdc-paginator-page-size-select {
+    width: 70px;
+  }
+
+  // Page size selected number text 
+  ::ng-deep .mat-mdc-select-value-text {
+    font-size: 1em;
+  }
+}
+
+// Height of each page size select option
+::ng-deep .mat-mdc-option {
+  min-height: 30px;
+  transition: all 0.2s ease-in-out !important;
+}
+
+// Color of options on hover
+::ng-deep .mat-mdc-option:hover {
+  background-color: var(--light-gray) !important;
+}
+
+// Color of the page size select options
+::ng-deep div.mat-mdc-select-panel {
+  background-color: var(--bg-color) !important;
+  padding: 0 !important;
+}
+
+// Font size of page size select options
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 15px !important; 
+}
+
+// Color of SELECTED page size select option
+::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) {
+  background-color: var(--primary-color) !important;
+}
+
+// Color of next/back arrows when they're enabled
+::ng-deep .mat-mdc-paginator-icon {
+  fill: var(--standard-text-color) !important;
+}
+
+
+// Make search and filter buttons always orange
+// ::ng-deep .home[_ngcontent-ng-c344992602] .mat-mdc-icon-button {
+//   color: var(--primary-color) !important;
+//   transition: all 0.2s ease-in-out !important;
+// }
+
+
+::ng-deep body.dark-mode .add-menu {
+  box-shadow: 0 2px 8px rgba(230, 230, 230, 0.2) !important;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
+  z-index: 100; /* Above other elements but below modal */
+}
+
+// Import button
+::ng-deep .mat-mdc-raised-button:not(:disabled) {
+  font-size: 1.1em;
+  background-color: var(--accent-color) !important;
+  color: white !important;
+  transition: all 0.3s ease-in-out !important;
+  height: 50px;
+}
+
+
+
+.generate-modal {
+  background: linear-gradient(135deg, rgb(34, 139, 34), rgb(0, 128, 51), rgb(46, 139, 87), rgb(143, 211, 143));
+  top: 55% !important;
+  width: 600px !important;
+  max-height: 575px;
+  transition: all 0.2s ease-in-out;
+
+  @media screen and (max-height: 715px) {
+    max-height: 530px;
+  }
+
+  .generate-form {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-color: #1c421f;
+    border: #1c421f 3px solid;
+    border-radius: 10px;
+    padding-bottom: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  h2 {
+    font-weight: 750;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  .ai-description {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    line-height: 1.3;
+  }
+
+  h3 {
+    margin-top: 25px;
+    margin-bottom: 0;
+    font-size: 1.3em;
+    color: #ffffff;
+  }
+
+  p {
+    font-size: 1em !important;
+    margin-top: 10px !important; 
+  }
+
+  .comma-text {
+    font-size: 0.95em;
+    margin-top: -20px;
+    margin-bottom: 5px;
+    color: #e6e6e6;
+    font-style: italic;
+  }
+
+  .specifications-text {
+    font-size: 0.95em;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    color: #e6e6e6;
+    font-style: italic;
+  }
+
+  mat-form-field {
+    margin-top: 5px !important;
+  }
+
+  mat-form-field button[mat-icon-button] {
+    margin-right: 15px;
+  }
+
+  mat-checkbox {
+    margin-right: 12px;
+  }
+
+  mat-chip-grid {
+    margin-left: 5.5%;
+    margin-right: 5.5%;
+    margin-bottom: -20px;
+  }
+
+  .mat-chip-grid-with-outline {
+    display: block;
+    border: 1.5px solid #c7c7c7; 
+    background-color: #1c421f;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 30px !important;
+    border-radius: 4px;
+  }
+
+  mat-chip-row {
+    background-color: rgb(234, 234, 234) !important;
+  }
+
+  mat-radio-button {
+    margin-right: 10px;
+  }
+  
+  .other-cuisine-input {
+    border: none;
+    background-color: transparent;
+    color: black;
+    border-bottom: 2px solid #1c421f;
+    padding: 5px;
+    font-size: 14px;
+    outline: none;
+    width: 150px;
+    margin-left: 5px;
+  }
+
+  .other-cuisine-input::placeholder {
+    color: #1c421f;
+    opacity: 1;
+  }
+
+  .other-cuisine-input:focus {
+    border-bottom: 2px solid black;
+  }
+
+  .generate-button {
+    margin-top: 20px;
+    background-color: #1c421f !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    @media screen and (max-height: 715px) {
+      .generate-form {
+        max-height: 270px;
+      }
+    }
+
+    .generate-form {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    h2 {
+      font-weight: 750;
+      font-size: 1.8em;
+      margin-top: -10px !important;
+    }
+
+    .ai-description {
+      font-size: 0.9em !important;
+    }
+  
+    h3 {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  
+    p {
+      font-size: 0.9em !important;
+    }
+  
+    mat-form-field {
+      margin-top: 0px !important;
+    }
+  
+    mat-form-field button[mat-icon-button] {
+      margin-right: 10px;
+    }
+  
+    mat-chip-grid {
+      margin-bottom: -15px;
+    }
+
+    .generate-button {
+      font-size: 1.1em;
+    }
+
+    .cancel-button {
+      font-size: 0.9em !important;
+    }
+  }
+
+  .generate-loading-title {
+    font-size: 2em;
+    margin-top: 0px;
+    margin-bottom: 45px;
+  }
+
+  .loading-text {
+    margin-top: 45px;
+    font-size: 1.2em;
+  }
+}
+
+.generate-form {
+  ::ng-deep mat-icon {
+    color: var(--accent-color) !important;
+  }
+}
+
+
+// Search Filter Menu
+::ng-deep .mat-mdc-menu-panel {
+  background-color: var(--light-gray) !important;
+  color: var(--standard-text-color) !important;
+}
+
+::ng-deep .filter-menu {
+  .mat-mdc-menu-content {
+    margin: 15px;
+    padding: 0;
+  }
+
+  p {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+  }
+
+  // Checkbox text space left and right
+  .mat-internal-form-field>label { 
+    margin-left: -5px;
+    margin-right: 10px;
+  }
+
+  // Checkbox text color
+  .mat-mdc-checkbox .mat-internal-form-field {
+    color: var(--standard-text-color);
+    transition: all 0.2s ease-in-out;
+  }
+
+  // Make checkbox hover circle go away
+  .mat-mdc-checkbox-ripple, .mdc-checkbox__ripple {
+    display: none;
+  }
+
+  // Unchecked checkbox border color
+  .mdc-checkbox__background {
+    border-color: var(--standard-light-text-color) !important;
+  }
+
+  // .mdc-checkbox__background:hover {
+  //   border-color: var(--primary-color) !important;
+  // }
+
+  // Checked checkbox color
+  .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+
+
+  // Clear and Apply buttons
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px; /* Add some spacing from checkboxes */
+    gap: 8px;
+  }
+
+  .clear-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background: var(--light-button-color) !important;
+    color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(.95) !important;
+    }
+  }
+
+  .apply-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: #c83e02 !important; 
+    }
+  }
+}

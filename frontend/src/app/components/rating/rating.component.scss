@@ -1,0 +1,15 @@
+.stars {
+  display: flex;
+  // justify-content: center;
+  // align-items: center;
+  width: 100%;
+  height: auto; /* Adjust height to auto to fit content */
+  overflow: hidden; /* Prevent overflow */
+  padding-top: 10px;
+}
+
+mat-icon {
+  font-size: 24px;
+  color: gold;
+  flex-shrink: 0; /* Prevent icons from shrinking */
+}

@@ -1,0 +1,240 @@
+<!-- Background overlay -->
+<div class="overlay" *ngIf="isModalVisible || isGenerateModalVisible"></div>
+<div class="home">
+    <!-- Import Recipe Modal -->
+    <div class="modal import-modal" *ngIf="isModalVisible">
+        <div class="modal-content">
+            <!-- Regular content of the modal when not loading -->
+            <div *ngIf="!isLoading">
+                <h2>Import Recipe</h2>
+                <p>Enter the URL of the recipe you want to import: </p>
+                <small class="ai-description">The recipe will be analyzed and extracted using AI.</small>
+                <form (ngSubmit)="importRecipeFromUrl()">
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="https://example.com/recipe" [(ngModel)]="recipeUrl"
+                            name="recipeUrl" required>
+                    </mat-form-field>
+                    <div class="button-group">
+                        <button mat-raised-button color="primary" class="import-button" type="submit">Import</button>
+                        <a class="cancel-button" (click)="closeModal()">Cancel</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Display loading state when importing -->
+            <div *ngIf="isLoading" class="loading-state">
+                <h3>Importing Recipe</h3>
+                <img src="cooking.gif" class="loading-image" />
+                <div class="loading-text">
+                    <p *ngFor="let message of loadingMessages; let i = index" [class.active]="i === currentMessageIndex"
+                        [ngStyle]="{ display: i === currentMessageIndex ? 'block' : 'none' }">
+                        {{ message }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-message" [class.show]="isErrorMessageVisible">
+        <span>
+            {{ errorMessage }}
+            <svg (click)="closeErrorMessage()" style="enable-background:new 0 0 512 512;" version="1.1"
+                viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                <g id="close">
+                    <g>
+                        <circle cx="256" cy="256" r="253.44" />
+                        <path
+                            d="M350.019,144.066l17.521,17.522c6.047,6.047,6.047,15.852,0,21.9L183.607,367.419c-6.047,6.048-15.852,6.047-21.9,0l-17.521-17.522c-6.047-6.047-6.047-15.852,0-21.9l183.932-183.933C334.166,138.018,343.971,138.018,350.019,144.066z"
+                            style="fill:rgb(206, 11, 11);" />
+                        <path
+                            d="M367.54,349.899l-17.522,17.522c-6.047,6.047-15.852,6.047-21.9,0L144.186,183.488c-6.047-6.047-6.047-15.852,0-21.9l17.522-17.522c6.047-6.047,15.852-6.047,21.9,0L367.54,327.999C373.588,334.047,373.588,343.852,367.54,349.899z"
+                            style="fill:rgb(206, 11, 11);" />
+                    </g>
+                </g>
+            </svg>
+        </span>
+    </div>
+
+    <div class="modal generate-modal" *ngIf="isGenerateModalVisible">
+        <div class="modal-content">
+            <div *ngIf="!isLoading">
+                <h2>Recipe Chef</h2>
+                <p class="ai-description">Don't know what to make? No worries! Let us cook up a recipe just for you.</p>
+
+                <div class="generate-form">
+                    <h3>Available Ingredients</h3>
+                    <p>What ingredients do you have that you'd like to use? </p>
+                    <br>
+                    <div class="comma-text">Enter them one-by-one or separated by commas.</div>
+
+                    <!-- Ingredients input -->
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Enter an ingredient" [(ngModel)]="ingredientInput"
+                            (keydown.enter)="addIngredient()" [matChipInputFor]="chipGrid">
+
+                        <button mat-icon-button matSuffix (click)="addIngredient()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <!-- Displaying the chips for ingredients -->
+                    <mat-chip-grid #chipGrid [ngClass]="{'mat-chip-grid-with-outline': ingredients.length > 0}"
+                        aria-label="Ingredient input chips" [formControl]="ingredientControl">
+                        <mat-chip-row *ngFor="let ingredient of ingredients" (removed)="removeIngredient(ingredient)">
+                            {{ingredient}}
+                            <button matChipRemove aria-label="'Remove ' + ingredient">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+                    </mat-chip-grid>
+
+                    <!-- Cuisine Selection -->
+                    <h3>Cuisine</h3>
+                    <p>Are you feeling a specific cuisine?</p>
+                    <mat-radio-group [(ngModel)]="selectedCuisine" name="cuisine" aria-label="Select Cuisine">
+                        <mat-radio-button value="any">Any</mat-radio-button>
+                        <mat-radio-button *ngFor="let cuisine of cuisines" [value]="cuisine">
+                            {{ cuisine }}
+                        </mat-radio-button>
+                        <mat-radio-button value="other">Other</mat-radio-button>
+                        <input *ngIf="selectedCuisine === 'other'" type="text" [(ngModel)]="otherCuisine"
+                            placeholder="Specify your cuisine..." (keydown.enter)="onEnter($event)"
+                            class="other-cuisine-input" />
+                    </mat-radio-group>
+
+                    <!-- Meal Type Selection -->
+                    <h3>Meal Type</h3>
+                    <p>What meal type do you want a recipe for?</p>
+                    <mat-radio-group [(ngModel)]="selectedMealType" name="mealType" aria-label="Select Meal Type">
+                        <mat-radio-button value="any">Any</mat-radio-button>
+                        <mat-radio-button *ngFor="let mealType of mealTypes" [value]="mealType.toLowerCase()">
+                            {{ mealType }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                    <!-- Cook Time Selection -->
+                    <h3>Cook Time</h3>
+                    <p>How long do you have to make the dish?</p>
+                    <mat-radio-group [(ngModel)]="selectedCookTime" name="cookTime" aria-label="Select Cook Time">
+                        <mat-radio-button value="any">Any</mat-radio-button>
+                        <mat-radio-button *ngFor="let cookTime of cookTimes" [value]="cookTime">
+                            {{ cookTime }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                    <!-- Equipment -->
+                    <h3>Available Equipment</h3>
+                    <p>What cooking equipment do you have?</p>
+                    <div class="equipment-container">
+                        <mat-checkbox *ngFor="let equipment of equipmentList" [(ngModel)]="selectedEquipment[equipment]"
+                            [value]="equipment">
+                            {{ equipment }}
+                        </mat-checkbox>
+                    </div>
+
+                    <!-- Other Specifications -->
+                    <h3>Other Specifications</h3>
+                    <p>If you have any other specifications or details, please add them here:</p>
+                    <div class="specifications-text">Ex: dietary restrictions, preferred spice levels, serving size,
+                        special occasions, etc.</div>
+                    <mat-form-field appearance="outline" class="other-specifications-input">
+                        <textarea matInput [(ngModel)]="otherSpecifications"
+                            placeholder="Add any other specifications here..." rows="2"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="button-group">
+                    <button mat-raised-button class="generate-button" (click)="generateRecipe()">Generate
+                        Recipe</button>
+                    <a class="cancel-button" (click)="closeGenerateModal()">Cancel</a>
+                </div>
+            </div>
+
+            <!-- Display loading state when generating -->
+            <div *ngIf="isLoading" class="loading-state">
+                <h3 class="generate-loading-title">Generating Recipe</h3>
+                <img src="cooking.gif" class="loading-image" />
+                <div class="loading-text">
+                    <p *ngFor="let message of generationLoadingMessages; let i = index"
+                        [class.active]="i === currentMessageIndex"
+                        [ngStyle]="{ display: i === currentMessageIndex ? 'block' : 'none' }">
+                        {{ message }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="title-bar">
+        <h1>All Recipes</h1>
+        <div class="search-bar">
+            <mat-form-field appearance="outline">
+                <mat-label>Search Recipes</mat-label>
+                <input matInput [(ngModel)]="searchQuery" (keydown)="onSearch($event)">
+                <button mat-icon-button matSuffix (click)="onSearch()">
+                    <mat-icon class="search-button">search</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-icon-button [matMenuTriggerFor]="filterMenu" class="filter-button">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+        </div>
+
+        <mat-menu #filterMenu="matMenu" class="filter-menu">
+            <p>Filter by: </p>
+            <mat-checkbox *ngFor="let tag of tags" [(ngModel)]="tag.selected" (click)="$event.stopPropagation()">
+                {{tag.name}}
+            </mat-checkbox>
+            <div class="buttons-container">
+                <button mat-menu-item class="clear-button" (click)="clearFilters()"><strong>Clear</strong></button>
+                <button mat-menu-item class="apply-button" (click)="applyFilters()"><strong>Apply</strong></button>
+              </div>
+        </mat-menu>
+    </div>
+    <div class="grid-container" [style.grid-template-columns]="gridTemplateColumns">
+        <div *ngIf="loading" class="spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
+        <ng-container *ngIf="!loading">
+            <div *ngIf="recipes.length === 0" class="no-recipes-message">
+                <p>No recipes found.</p>
+            </div>
+            <div class="grid-item" *ngFor="let recipe of recipes">
+                <app-recipe-small [recipe]="recipe"></app-recipe-small>
+            </div>
+        </ng-container>
+    </div>
+    <button mat-fab class="add-recipe-button">
+        <mat-icon>add</mat-icon>
+    </button>
+    <div class="add-menu">
+        <button mat-menu-item class="generate-option" (click)="openGenerateModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path
+                    d="M234.7 42.7L197 56.8c-3 1.1-5 4-5 7.2s2 6.1 5 7.2l37.7 14.1L248.8 123c1.1 3 4 5 7.2 5s6.1-2 7.2-5l14.1-37.7L315 71.2c3-1.1 5-4 5-7.2s-2-6.1-5-7.2L277.3 42.7 263.2 5c-1.1-3-4-5-7.2-5s-6.1 2-7.2 5L234.7 42.7zM46.1 395.4c-18.7 18.7-18.7 49.1 0 67.9l34.6 34.6c18.7 18.7 49.1 18.7 67.9 0L529.9 116.5c18.7-18.7 18.7-49.1 0-67.9L495.3 14.1c-18.7-18.7-49.1-18.7-67.9 0L46.1 395.4zM484.6 82.6l-105 105-23.3-23.3 105-105 23.3 23.3zM7.5 117.2C3 118.9 0 123.2 0 128s3 9.1 7.5 10.8L64 160l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L128 160l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L128 96 106.8 39.5C105.1 35 100.8 32 96 32s-9.1 3-10.8 7.5L64 96 7.5 117.2zm352 256c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L416 416l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L480 416l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L480 352l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L416 352l-56.5 21.2z" />
+            </svg>
+            Generate Recipe
+        </button>
+        <button mat-menu-item class="import-option" (click)="importRecipe()">
+            <svg data-name="Layer 1" id="Layer_1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M21.7406,17.02355a.485.485,0,0,0-.08227-.02136l-.007-.00537-.064-.04352a1.42145,1.42145,0,0,0-.16736-.08655,3.03133,3.03133,0,0,0-.48169-.15985A7.71413,7.71413,0,0,1,17.74957,15.144,11.45622,11.45622,0,0,1,14.003,7.96954a11.83659,11.83659,0,0,1-.14953-1.20331l-.027-.30493-.01361-.15277L13.806,6.23205,13.8042,6.213a.74808.74808,0,0,0-.02832-.16236.663.663,0,0,0-1.2251-.12573.74154.74154,0,0,0-.08044.29675l-.00672.07019c-.05651.00367-.06341.00428-.00006.0008l-.00055.00555-.01458.1532-.02912.30682A15.59152,15.59152,0,0,1,12.00952,9.188a12.263,12.263,0,0,1-1.9721,4.29437,8.50086,8.50086,0,0,1-3.16993,2.62958l-.6358.25025c-.30835.10986-.73444.19354-.9646.29248l-.79816.28039-.38812.13642c-.06561.03479-.03107.053-.05133.08l-.04291.14594-.02069.07055a.71852.71852,0,0,0-.00409.08765.12673.12673,0,0,0,.00763.05408l.07678.2586a4.96659,4.96659,0,0,0,.54383.3664,8.00334,8.00334,0,0,1,1.91791.475l.28057.10906a1.54321,1.54321,0,0,1,.22687.10639l.481.24841A8.75756,8.75756,0,0,1,9.51788,20.714a12.27308,12.27308,0,0,1,2.71662,5.67475,16.66048,16.66048,0,0,1,.25921,1.7547l.044.44061.00549.05493a.74735.74735,0,0,0,.02307.14295.58986.58986,0,0,0,1.11561.07763.66164.66164,0,0,0,.04888-.213l.00232-.02747.01862-.21936.07446-.87091a15.79543,15.79543,0,0,1,.73786-3.20617,10.47,10.47,0,0,1,2.4469-4.00592,8.044,8.044,0,0,1,3.25317-2.00043c.82928-.27387,1.31128-.29975,1.3952-.38751.0503-.03577-.04339-.185.0575-.18311a.35641.35641,0,0,0,.28247-.40942.38463.38463,0,0,0-.1117-.21985A.41507.41507,0,0,0,21.7406,17.02355Z" />
+                <path
+                    d="M27.899,8.73254a.38338.38338,0,0,0-.21955-.17786c-.1156-.02576-.03747-.01794-.0661-.0285l-.02343-.03675a.45369.45369,0,0,0-.06165-.069.576.576,0,0,0-.17841-.10968,4.52358,4.52358,0,0,1-.57745-.201,3.165,3.165,0,0,1-1.16235-.95582,4.03659,4.03659,0,0,1-.277-.41217L25.20416,6.512l-.15692-.33875a4.98155,4.98155,0,0,1-.19671-.64233c-.05884-.24231-.12909-.42383-.1792-.73206q-.08148-.4269-.16449-.86133c-.01239-.09722-.031-.08929-.048-.10717l-.05194-.04566-.10455-.09155-.10138-.08624-.05451-.024-.10052-.0426-.04657-.01874-.01172-.00433c-.00732-.00251-.04407-.00019-.03418.00055l-.0235.00555c-.01385.00006-.09442.02484-.17407.04791a1.72278,1.72278,0,0,0-.20544.15143.56831.56831,0,0,0-.11249.09894l-.127.353a7.48636,7.48636,0,0,1-.41589,1.91363c-.12866.29309-.1477.32678-.20563.43726l-.16656.28412a3.40451,3.40451,0,0,1-.81445.89306.8207.8207,0,0,1-.11322.08039l-.1789.11816a3.65131,3.65131,0,0,1-.731.25366,3.0034,3.0034,0,0,0-.36248.11725l-.31655.12336c-.16467.09344-.28489.20849-.25242.25811l-.061.1684-.007.07037a.72551.72551,0,0,0,.008.1568l.05438.1441.022.05683.0127.03277.08459.0531c.12043.07459.26319.16309.43476.26947.26263.05848.51758.14588.83642.23493a1.23147,1.23147,0,0,1,.39191.19183l.15625.10028a3.66039,3.66039,0,0,1,.65247.62451,4.09263,4.09263,0,0,1,.30182.43695,3.68913,3.68913,0,0,1,.34552.70942c.27807.70691.35191,2.06729.73529,2.21856a.27712.27712,0,0,0,.2547.1557c.14515,0,.40147.0704.59393-.84448.17064-.8112.233-1.241.3772-1.70911.1029-.24621.14361-.31622.1842-.407l.14569-.25458a3.38383,3.38383,0,0,1,.5553-.69641,5.38175,5.38175,0,0,1,1.7926-.966c.01825-.0304-.04059-.18646.04431-.17889A.32311.32311,0,0,0,27.899,8.73254Z" />
+            </svg>
+            Import from Website
+        </button>
+        <button mat-menu-item class="add-option" (click)="addRecipe()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                    d="M481 31C445.1-4.8 386.9-4.8 351 31l-15 15L322.9 33C294.8 4.9 249.2 4.9 221.1 33L135 119c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0L255 66.9c9.4-9.4 24.6-9.4 33.9 0L302.1 80 186.3 195.7 316.3 325.7 481 161c35.9-35.9 35.9-94.1 0-129.9zM293.7 348.3L163.7 218.3 99.5 282.5c-48 48-80.8 109.2-94.1 175.8l-5 25c-1.6 7.9 .9 16 6.6 21.7s13.8 8.1 21.7 6.6l25-5c66.6-13.3 127.8-46.1 175.8-94.1l64.2-64.2z" />
+            </svg>
+            Add Your Own
+        </button>
+    </div>
+
+    <mat-paginator #paginator class="paginator" (page)="handlePageEvent($event)" aria-label="Select page"
+        [pageSize]="pageSize" [length]="recipesCount" showFirstLastButtons="true" [pageIndex]="pageIndex"
+        [pageSizeOptions]="[8, 12, 24, 50, 100]">
+    </mat-paginator>
+</div>

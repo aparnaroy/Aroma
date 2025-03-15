@@ -1,0 +1,387 @@
+@import '../../../styles.scss';
+
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+    background-color: #ffebcc; 
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weekday-title {
+    text-align: center;
+    font-weight: bold;
+    color: #ff6f00; 
+    font-size: 16px;
+}
+
+#calendar-contents {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 15px;
+    // padding: 10px;
+    width: 100%;
+}
+
+.calendar {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 40px;
+    font-size: 1.1em;
+}
+
+// .week-view {
+//     display: grid;
+//     grid-template-columns: repeat(7, 1fr);
+//     gap: 10px;
+// }
+
+
+.weekend-box, .calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff; 
+    border: 1px solid #ffb74d;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 150px; 
+    flex: 1; 
+}
+
+.week-box-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.week-box-header div {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff6f00; 
+}
+
+
+.add-recipe-button {
+    background-color: #ff9800; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-recipe-button:hover {
+    background-color: #e68900; 
+    transform: scale(1.05);
+}
+
+
+.weekend-box {
+    background-color: #fff8e1; 
+    border: 1px solid #ffa726; 
+}
+
+
+.mini-recipe-blocks {
+    height: 100px;
+    width: 100px;
+}
+
+
+
+.recipes-grid::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.recipes-grid::-webkit-scrollbar-thumb {
+    background-color: #ff9800; 
+    border-radius: 4px; 
+}
+
+.recipes-grid::-webkit-scrollbar-track {
+    background-color: #f7f7f7; 
+}
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px; 
+    padding: 20px;
+    background-color: #fff3e0; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 380px; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+}
+
+
+.recipe-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ffb74d; 
+    border-radius: 8px;
+    background-color: #fff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.app-recipe-small {
+    width: 100%; 
+    height: auto; 
+    margin-bottom: 10px; 
+    border-radius: 8px;
+}
+
+.checkboxes {
+    transform: scale(1.5);
+    margin-top: 8px; 
+    accent-color: #ff9800; 
+    cursor: pointer; 
+}
+
+.recipe-display:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-display:focus-within {
+    border-color: #ff9800; 
+}
+
+.checkboxes:hover {
+    transform: scale(1.7); 
+}
+ 
+
+#selection-screen {
+    background-color:rgba(0, 0, 0, 0.3);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#popup-box {
+    position: fixed;
+    background-color: white;
+    width: 600px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgb(0, 0, 0);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.search-bar {
+    display: flex;
+}
+
+#input-box {
+    flex: 1; /* Take up available space */
+    padding: 10px 35px 10px 12px; /* Right padding to make room for the clear button */
+    border: 1px solid #ffb74d;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    margin-left: 15px;
+}
+
+#input-box:focus {
+    border-color: #ffa726;
+    box-shadow: 0 0 5px 2px rgba(255, 183, 77, 0.5);
+}
+
+#input-box::placeholder {
+    color: #aaa;
+    opacity: 0.8;
+}
+
+.clear-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: -35px; /* Adjust spacing for overlap with input box */
+}
+
+.clear-button:hover {
+    color: #ff6347; /* Change color on hover */
+}
+
+.clear-button:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+.search-button, .add-button, .exit-button {
+    background-color: #ff9800; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+    //margin: 15px;
+
+}
+
+.search-button:hover, .add-button:hover, .exit-button:hover {
+    background-color: #e68900; 
+    transform: scale(1.05);
+}
+
+.exit-button {
+    background-color: #e57373; 
+}
+
+.exit-button:hover {
+    background-color: #b71c1c; 
+}
+
+.search-button:focus, .add-button:focus, .exit-button:focus {
+    outline: none; 
+}
+
+.popup-menu-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+    background-color: #fffaf0;
+    padding: 5px;
+    border: 1px solid #ffb74d;
+    border-radius: 8px;
+    //width: 100%; /* Stretch to the full width of the parent container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .recipe-item {
+    background-color: #f9f9f9; /* Light gray background */
+    color: #333; /* Dark gray text color */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px 12px; /* Spacing inside the element */
+    margin-bottom: 4px; /* Space between recipe items */
+    font-size: 14px; /* Adjust font size */
+    display: flex;
+    align-items: center; /* Center the text vertically */
+    justify-content: space-between; /* Space between text and optional icon/button */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+}
+
+
+::ng-deep .recipe-item:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+
+/* Container for the grocery list */
+#grocery-list {
+    background-color: #fffaf0; /* Light warm tone background */
+    border: 1px solid #ffb74d; /* Match the orange theme */
+    border-radius: 8px;
+    padding: 18px 40px;
+    margin: 20px auto;
+    max-width: 500px; /* Adjust based on your layout */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16.5px;
+    color: #333;
+    overflow-y: auto;
+    max-height: 400px; /* Allow scrolling for long lists */
+    line-height: 1.6;
+    display: none;
+}
+
+/* Styling for each ingredient item */
+#grocery-list div {
+    padding: 8px;
+    margin: 4px 0;
+    background-color: #ffe4b2; /* Subtle orange background for items */
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Highlighted hover effect for items */
+#grocery-list div:hover {
+    background-color: #ffc107; /* Brighter orange on hover */
+    color: #fff; /* Text contrast on hover */
+    cursor: pointer;
+}
+
+/* Style for the "Generate Grocery List" button */
+.generate-grocery-list-button {
+    background-color: #ffa726;
+    color: #fff;
+    border: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 16px; /* Spacing between button and list */
+}
+
+button:hover {
+    background-color: #ff8f00;
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+button:active {
+    background-color: #ff6f00;
+    transform: translateY(0); /* Reset lift on click */
+}
+
+.remove-recipe-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes it circular */
+    cursor: pointer;
+    padding: 0; /* Reset padding for a uniform circle */
+    width: 20px; /* Set width and height for a consistent circle */
+    height: 20px;
+    display: flex; /* Center the 'x' inside the circle */
+    align-items: center;
+    justify-content: center;
+    font-size: 14px; /* Adjust font size for the 'x' */
+    font-weight: bold;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add subtle shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.remove-recipe-btn:hover {
+    background-color: darkred;
+}
+

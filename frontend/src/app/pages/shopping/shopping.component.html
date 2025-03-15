@@ -1,0 +1,90 @@
+<div class="home">
+    <div class="top-bar">
+        <h1>Grocery Lists</h1>
+    </div>
+    <div class="grocery-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="list-container">
+                <!-- Input field for adding a new list -->
+                <input type="text" [value]="newListName" (input)="onNewListNameChange($event)"
+                    (keyup.enter)="addNewList()" placeholder="Add list..." />
+                <button (click)="addNewList()" [disabled]="isLoading">
+                    <mat-icon>addItem</mat-icon>
+                </button>
+                <div *ngIf="message" class="message-box">
+                  {{ message }}
+                </div> 
+            </div>
+            <!-- Spinner while loading -->
+            <div *ngIf="isLoading" class="spinner-container">
+                <mat-spinner></mat-spinner>
+            </div>
+            <ul class="list-names" *ngIf="!isLoading">
+                <li *ngFor="let listName of shoppingLists | keyvalue" [class.selected]="listName.key === selectedList">
+                    <div class="grid1" (click)="selectList(listName.key)">
+                        <h2><b><span>{{ listName.key }}</span></b></h2>
+                        <h4>
+                            <span class="list-meta">
+                                {{ listName.value.items.length }} {{ listName.value.items.length === 1 ? 'item' :
+                                'items' }}
+                            </span>
+                            <br />
+                            <span class="list-meta">
+                                Last Updated: {{ lastUpdated(listName.key) }}
+                            </span>
+                        </h4>
+                    </div>
+                    <button class="delete-list" mat-icon-button (click)="confirmDeleteList(listName.key)">
+                        <mat-icon>deleteItem</mat-icon>
+                    </button>
+                </li>
+            </ul>
+        </div>       
+
+        <!-- Main Area for Items in Selected List -->
+        <div class="main-content">
+            <ng-container *ngIf="selectedList; else noSelection">
+                <h2>{{ selectedList }}</h2>
+                <ul class="items-list">
+                    <li *ngFor="let item of shoppingLists[selectedList]?.items; let i = index">
+                        <input type="checkbox" id="ingredient-{{i}}" [checked]="item.bought"
+                            (change)="toggleItemBought(i)" />
+                        <span *ngIf="editingItemIndex !== i">{{ item.name }}</span>
+                        <input *ngIf="editingItemIndex === i" type="text" [(ngModel)]="editingItemName"
+                            (keyup.enter)="saveItem(i)" />
+                        <div class="list-buttons">
+                            <button *ngIf="editingItemIndex !== i" (click)="editItem(i)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button *ngIf="editingItemIndex === i" (click)="saveItem(i)">
+                                <mat-icon>check</mat-icon>
+                            </button>
+                            <button *ngIf="editingItemIndex === i" (click)="cancelEdit()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <button (click)="deleteItem(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Empty item input for adding a new item to the checklist -->
+                <div class="new-item">
+                    <input type="text" #newItemInput
+                        (keyup.enter)="addItem(newItemInput.value); newItemInput.value = ''"
+                        placeholder="Add item..." />
+                    <button (click)="addItem(newItemInput.value); newItemInput.value = ''">
+                        <mat-icon>addItem</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+
+            <!-- Message when no list is selected -->
+            <ng-template #noSelection>
+                <h2 style="color: #333">Please select a list to view items.</h2>
+            </ng-template>
+        </div>
+    </div>
+</div>

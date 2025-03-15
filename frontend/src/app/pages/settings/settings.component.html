@@ -1,0 +1,78 @@
+<div class="settings-container">
+    <mat-card-title class="title">Settings</mat-card-title>
+
+    <!-- Account Information Section -->
+    <mat-card class="account-info-card">
+        <mat-card-title class="sub-title profile">Profile</mat-card-title>
+        <div class="profile-container">
+            <div class="profile-circle" [style.backgroundColor]="profileColor">
+                {{ profileInitial }}
+            </div>
+            <div class="user-details">
+                <div class="user-email">{{ userEmail }}</div>
+                <div class="member-info">
+                    Member since: {{ userCreated | date:'longDate' }}
+                </div>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-title class="sub-title update">Account Information</mat-card-title>
+    <div class="form-container">
+        <mat-card>
+            <mat-card-title class="sub-sub-title">Change Email</mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input id="username" matInput formControlName="username" type="text" autocomplete="email">
+                    </mat-form-field>
+                    <div *ngIf="emailErrorMsg" class="error-message">{{ emailErrorMsg }}</div>
+                    <div class="button">
+                        <button type="submit" mat-button class="update-button">Update Email</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- Add space between forms -->
+        <div class="form-separator"></div>
+
+        <mat-card>
+            <mat-card-title class="sub-sub-title">Change Password</mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+                    <mat-form-field>
+                        <mat-label>Old Password</mat-label>
+                        <input id="oldPassword" matInput formControlName="oldPassword" type="password" autocomplete="current-password">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>New Password</mat-label>
+                        <input id="newPassword" matInput formControlName="newPassword" type="password"
+                            (input)="checkPasswordRequirements()" (blur)="passwordTouched = true" autocomplete="password">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Confirm Password</mat-label>
+                        <input id="confirmPassword" matInput formControlName="confirmPassword" type="password"
+                            (input)="checkPasswordRequirements()" (blur)="passwordTouched = true" autocomplete="password">
+                    </mat-form-field>
+                    <div class="password-requirements">
+                        <p *ngFor="let req of passwordRequirements" [ngClass]="{ 
+                            'met': req.met, 
+                            'not-met': passwordTouched && !req.met, 
+                            'default': !passwordTouched && !req.met 
+                        }">
+                            <mat-icon>{{ req.met ? 'check_circle' : 'cancel' }}</mat-icon>
+                            {{ req.message }}
+                        </p>
+                    </div>
+                    <div class="button">
+                        <button type="submit" mat-button class="change-password-button">Update Password</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
