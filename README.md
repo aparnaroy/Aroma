@@ -36,7 +36,7 @@ Aroma is a personal recipe and meal-planning assistant that helps users:
 ## Accomplishments We're Proud Of
 
 - Successfully built a full-stack meal planning and recipe management system.
-- Implemented an beautiful, intuitive, and responsive UI using Angular.
+- Implemented a beautiful, intuitive, and responsive UI using Angular.
 - Integrated JWT authentication to ensure secure user logins and data protection.
 
 ## What We Learned
