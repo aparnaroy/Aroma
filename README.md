@@ -22,7 +22,7 @@ Aroma is a personal recipe and meal-planning assistant that helps users:
 ## How We Built It
 
 - **Languages & Frameworks:** Angular, TypeScript, and HTML/SCSS
-- **API:** NodeJS with Express, Puppeteer (for web scraping), OpenAI API
+- **API:** Node.js with Express, Puppeteer (for web scraping), OpenAI API
 - **Database:** MongoDB to store recipes, meal plans, grocery lists, and user data.
 - **Security:** JWTs (JSON Web Tokens) for secure user authentication.
 
